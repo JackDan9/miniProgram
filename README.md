@@ -89,18 +89,6 @@ app.wxss
 | enablePullDownRefresh | Boolean | false | 是否开启下拉刷新，详见页面相关事件处理函数 | | 
 | onReachBottomDistance | Number | 50 | 页面上拉触底事件触发时距页面底部距离，单位为px |
 
-#### tabBar
-- 如果小程序是一个多tab应用(客户端窗口的底部或者顶部有`tab`栏可以切换页面)，可以通过`tabBar`配置项指定`tab`栏的表现，以及`tab`切换时显示的对应页面。
-- **Tip**:
-    - 1. 当设置`position`为`top`时，将不会显示`icon`
-    - 2. `tabBar`中的`list`是一个数组，**只能配置最少2个、最多5个tab**, tab按数组的顺序排序。
-
-- **属性说明**:
-
-| 属性 | 类型 | 必填 | 默认值 | 描述 |
-| --- | --- | --- | --- | --- |
-
-
 **注: HexColor(十六进制颜色值), 如"#ffffff"**
 
 **注: navigationStyle只在app.json中生效。开启custom后, 低版本客户端需要做好兼容。 开发者工具基础**
@@ -121,5 +109,16 @@ app.wxss
 
 ![window_config][1]
 
+
+#### tabBar
+- 如果小程序是一个多tab应用(客户端窗口的底部或者顶部有`tab`栏可以切换页面)，可以通过`tabBar`配置项指定`tab`栏的表现，以及`tab`切换时显示的对应页面。
+- **Tip**:
+    - 1. 当设置`position`为`top`时，将不会显示`icon`
+    - 2. `tabBar`中的`list`是一个数组，**只能配置最少2个、最多5个tab**, tab按数组的顺序排序。
+
+- **属性说明**:
+
+| 属性 | 类型 | 必填 | 默认值 | 描述 |
+| --- | --- | --- | --- | --- |
 
   [1]: ./images/config.jpg "config.jpg"
