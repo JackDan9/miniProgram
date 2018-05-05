@@ -120,7 +120,8 @@ app.wxss
 
 | 属性 | 类型 | 必填 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
-| color |
+| color | HexColor | 是 | | tab上的文字默认颜色 |
+| selectedColor | HexColor | 是 | | tab上的文字选中时的颜色 |
 
 
 
