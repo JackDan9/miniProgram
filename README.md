@@ -121,4 +121,7 @@ app.wxss
 | 属性 | 类型 | 必填 | 默认值 | 描述 |
 | --- | --- | --- | --- | --- |
 | color |
+
+
+
   [1]: ./images/config.jpg "config.jpg"
