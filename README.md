@@ -122,7 +122,10 @@ app.wxss
 | --- | --- | --- | --- | --- |
 | color | HexColor | 是 | | tab上的文字默认颜色 |
 | selectedColor | HexColor | 是 | | tab上的文字选中时的颜色 |
-
+| backgroundColor | HexColor | 是 | | tab的背景颜色 |
+| borderStyle | String | 否 | black | tabbar上边框的颜色，仅支持black/white |
+| list | Array | 是 | | tab的列表，list属性说明(最少2个，最多5个tab) |
+| position | String | 否 | bottom | 可选值bottom、top |
 
 
   [1]: ./images/config.jpg "config.jpg"
