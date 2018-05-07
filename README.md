@@ -14,27 +14,27 @@
 - `app.json`是对当前小程序的全局配置，包括了小程序的所有页面路径、界面表现、网络超时时间、底部tab等。如:
 ```
 {
-  "pages": [
-    "pages/index/index",
-    "pages/logs/index"
-  ],
-  "window": {
-    "navigationBarTitleText": "Demo"
-  },
-  "tabBar": {
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "首页"
-    }, {
-      "pagePath": "pages/logs/logs",
-      "text": "日志"
-    }]
-  },
-  "networkTimeout": {
-    "request": 10000,
-    "downloadFile": 10000
-  },
-  "debug": true
+    "pages": [
+        "pages/index/index",
+        "pages/logs/index"
+    ],
+    "window": {
+        "navigationBarTitleText": "Demo"
+    },
+    "tabBar": {
+        "list": [{
+        "pagePath": "pages/index/index",
+        "text": "首页"
+        }, {
+        "pagePath": "pages/logs/logs",
+        "text": "日志"
+        }]
+    },
+    "networkTimeout": {
+        "request": 10000,
+        "downloadFile": 10000
+    },
+    "debug": true
 }
 ```
 
