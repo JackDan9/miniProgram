@@ -127,5 +127,34 @@ app.wxss
 | list | Array | 是 | | tab的列表，list属性说明(最少2个，最多5个tab) |
 | position | String | 否 | bottom | 可选值bottom、top |
 
+- 其中list接受一个数组，数组中的每个项都是一个对象，其属性值如下:
+
+| 属性 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| pagePath | String | 是 | 页面路径, 必须在pages中先定义 |
+| text | String | 是 | tab上的按钮文字 |
+| iconPath | String | 否 | 图片路径，icon大小限制为40kb， 建议尺寸为81px * 81px，当position为top时，此参数无效，不支持网络图片 |
+| selectedPath | String | 否 | 选中时的图片路径，icon大小限制为40kb，建议尺寸为81px * 81px，当position为top时，此参数无效 |
+
+![tabbar][2]
+
+#### networkTimeout
+- 可以设置各种网络请求的超时时间。
+- **属性说明**:
+
+| 属性 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| request | Number | 否 | wx.request的超时时间，单位毫秒，默认为：60000 |
+| connectSocket | Number | 否 | wx.connectSocket的超时时间，单位毫秒，默认为: 60000 |
+| uploadFile | Number | 否 | wx.uploadFile的超时时间, 单位毫秒，默认为: 60000 |
+| downloadFile | Number | 否 | wx.downloadFile的超时时间，单位毫秒，默认为: 60000 |
+
+#### debug
+- 可以在开发者工具中debug模式，在开发者工具的控制台面板，调试信息以`info`的形式给出，其信息有`Page`的注册，页面路由，数据更新，事件触发。可以帮助开发者快速定位一些常见的问题。
+
+#### page.json
+- 每一个小程序页面也可以使用`.json`文件来对本页面的窗口表现进行配置。页面的配置比`app.json`全局配置简单得多，只是设置`app.json`中的`window`配置项的内容，页面中配置项会覆盖`app.json`的`window`中相同的配置项。
+- 页面的
 
   [1]: ./images/config.jpg "config.jpg"
+  [2]: ./images/tabbar.png "tabbar.png"
