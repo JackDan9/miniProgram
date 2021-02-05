@@ -24,7 +24,7 @@
     ]
   },
   "include": [
-    "./**/*.ts"
+    "./**/*.ts", "miniprogram/app.ts_bak", "miniprogram/pages/index/index.ts_bak", "miniprogram/config/config.js"
   ],
   "exclude": [
     "node_modules"

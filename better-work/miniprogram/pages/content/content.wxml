@@ -1,0 +1,45 @@
+<!--pages/content/content.wxml -->
+<swiper previous-margin="{{previousMargin}}rpx" next-margin="{{nextMargin}}rpx" indicator-dots="{{false}}" bindchange="swiperChange" current='{{swiperIndex}}'>
+  <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="{{index}}">
+    <swiper-item>
+      <view class="content">
+        <view class='content_header'>
+        </view>
+        <view class='content_view'>
+          <text class='title'>{{item.title}}</text>
+          <view class='page-head-line'></view>
+          <view class='content_font'>{{item.summary}}</view>
+        </view>
+        <view class='content_foot'>
+          <view class='page-head-line'></view>
+          <button class="chakan-btn" bindtap='toPage' id="{{item.newsArray[0].url}}">
+            <!-- 查看全文 -->
+            <icon class="iconfont icon-chakan"></icon> 查看全文
+          </button>
+          <button wx:if="{{backButton}}" class='back_index' bindtap='toPageIndex'>返回首页</button>
+          <view class='share-img' id="{{item.id}}" data-title="{{item.title}}" data-content='{{item.summary}}' bindtap='share'>
+            <!-- <image mode="aspectFill" src='/imgs/share.png' id="{{item.id}}" data-title="{{item.title}}" data-content='{{item.summary}}' bindtap='share'></image> -->
+            <!-- <text id="{{item.id}}">分享</text> -->
+            <button class='share-btn'>
+              <icon id="{{item.id}}" data-title="{{item.title}}" data-content='{{item.summary}}' class="iconfont icon-fenxiang01" bindtap='share'></icon>
+            </button>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>
+<view class='myActionSheet' bindtap='cancelShare' animation="{{animation}}">
+  <view class='ul' catchtap="nothing">
+    <button open-type='share'>
+      <icon class='iconfont icon-wechat'></icon> 微信好友
+    </button>
+    <button bindtap="saveShare">
+      <icon class='iconfont icon-erweimafenxiang'></icon> 保存分享
+    </button>
+    <button bindtap='cancelShare'>
+      <image mode="aspectFill" src="/imgs/save-cancel.svg" style="width: 32rpx; height: 32rpx;"></image>取消
+      <!-- <icon class="iconfont icon-jurassic_cancle-save"></icon>取消 -->
+    </button>
+  </view>
+</view>

@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'iconfont';  /* project id 2367146 */
+  src: url('//at.alicdn.com/t/font_2367146_z77yfnt5a3h.eot');
+  src: url('//at.alicdn.com/t/font_2367146_z77yfnt5a3h.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2367146_z77yfnt5a3h.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2367146_z77yfnt5a3h.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2367146_z77yfnt5a3h.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2367146_z77yfnt5a3h.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 34rpx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jurassic_cancle-save:before {
+  content: "\e6f0";
+}
+
+.icon-baocuntupian:before {
+  content: "\e6d2";
+}
+
+.icon-erweimafenxiang:before {
+  content: "\e603";
+}
+
+.icon-wechat:before {
+  content: "\e600";
+  color: #3bd230;
+}
+
+.icon-chakan:before {
+  content: "\e69a";
+  color: #333000;
+  font-size: 60rpx;
+}
+
+.icon-fenxiang01:before {
+  content: "\e6d1";
+  color: #333000;
+  font-size: 60rpx;
+}

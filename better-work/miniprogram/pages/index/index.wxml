@@ -1,24 +1,10 @@
 <!--pages/index/index.wxml-->
-<scroll-view 
-  class="container" 
-  scroll-y="true" 
-  bindscrolltolower="scrollToLowerEvent">
-  <view 
-    class="content" 
-    wx:for="{{contentList}}"
-    wx:for-item="item"
-    wx:key="item.date"
-    wx:if="{{item.list.length > 0}}">
-    <text class="content_title">{{item.date}}</text>
-    <view
-      id="{{itemContent.id}}"
-      class="item_content"
-      hover-class="item_content_hover"
-      wx:for="{{item.list}}" 
-      wx:for-item="itemContent" 
-      wx:key="itemContent.id" 
-      bindtap="toPage">
-      <view class="item_content_title">
+<!--pages/index/index.wxml-->
+<scroll-view scroll-y="true" class="index" bindscrolltolower="scrolltolowerNewEvent" enable-flex="true">
+  <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length>0}}">
+    <text class='title'>{{item.date}}</text>
+    <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class='content' hover-class="content_hover" bindtap='toPage' id="{{itemContent.id}}">
+      <view class='title'>
         <text>{{itemContent.title}}</text>
       </view>
       <view>

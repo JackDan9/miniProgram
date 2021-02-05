@@ -1,52 +1,174 @@
-"use strict";
-var app = getApp();
+// pages/index/index.js
+var apiHelper = require("../../utils/api.js");
+var util = require("../../utils/util.js");
+let app = getApp();
 Page({
-    data: {
-        motto: 'Hello World',
-        userInfo: {},
-        hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    },
-    bindViewTap: function () {
-        wx.navigateTo({
-            url: '../logs/logs',
-        });
-    },
-    onLoad: function () {
-        var _this = this;
-        if (app.globalData.userInfo) {
-            this.setData({
-                userInfo: app.globalData.userInfo,
-                hasUserInfo: true,
-            });
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    isIphoneX: app.globalData.isIphoneX ? true : false,
+    currentPageIndex: 1,//当前请求全局页数
+    currentDate: util.getLocalTime(),//当前请求日期
+    currentDateIsNoData: true,//当前天是否还有数据
+    isBusy: false,//是否正在请求数据中
+    fastScroll: true,//第一次滚动加载
+    array: [],//日期结构数据
+    newsArray: []//所有文章存放数组
+  },
+  toPage: function (event) {
+    wx.navigateTo({
+      url: `/pages/content/content?id=${event.currentTarget.id}`
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.getListNew(this.data.currentPageIndex);
+  },
+
+  //滚动加载 new 
+  scrolltolowerNewEvent: function (e) {
+    if (!this.data.isBusy) {
+      //查看当天是否还有数据
+      if (this.data.currentDateIsNoData) {
+        this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length-1].order;
+        this.getListNew(this.data.currentPageIndex);
+      } else {
+        wx.showToast({
+          title: '没有数据了',
+          icon: 'none',
+          duration: 500
+        })
+      }
+    }
+  },
+  /* new  */
+  getListNew(pageIndex, pageSize = 10) {
+    this.data.isBusy = true;
+    var self = this;
+    apiHelper.paramData.cmd = "articles"; //cmd
+    apiHelper.paramData.loadingState = false;
+    apiHelper.paramData.param = {
+      pageIndex,
+      pageSize
+    };
+    apiHelper.post((res) => {
+      if (res.State == 0) {
+        res.Value=res.Value.data;
+        if (res.Value.length == 0) {
+          //标识数据已被全部请求完
+          self.data.currentDateIsNoData = false;
+        } else {
+          self.data.newsArray = self.data.newsArray.concat(res.Value);
+          //数据  剩余条数不超过请求条数，说明下一页已没有数据
+          if (res.Value.length < pageSize) {
+            //标识数据已被全部请求完
+            self.data.currentDateIsNoData = false;
+          } else {
+            let array = res.Value;
+            for (let i = 0; i < array.length; i++) {
+              // console.log(array[i].publishDate)
+              let pushdate = array[i].updatedAt.substr(0, 10);
+              // console.log(pushdate)
+              pushdate = util.getLocalTime(0, new Date(pushdate));
+              if (pushdate == util.getLocalTime()) {
+                pushdate = "今天";
+              } else if (pushdate == util.getLocalTime(-1)) {
+                pushdate = "昨天";
+              }
+              let index = self.data.array.findIndex(item => { return item.date == pushdate });
+              if (index != -1) {
+                //如果有数据，数组
+                if (res.Value.length > 0) {
+                  self.data.array[index].array.push(array[i])
+                }
+                else {
+                  //标识当天数据已被全部请求完
+                  self.data.currentDateIsNoData = false;
+                  self.data.currentPageIndex = 1;
+                }
+              } else {
+                self.data.array.push({
+                  date: pushdate,
+                  array: [array[i]]
+                })
+              }
+            }
+            self.data.currentDateIsNoData = true;
+          }
         }
-        else if (this.data.canIUse) {
-            app.userInfoReadyCallback = function (res) {
-                _this.setData({
-                    userInfo: res.userInfo,
-                    hasUserInfo: true,
-                });
-            };
-        }
-        else {
-            wx.getUserInfo({
-                success: function (res) {
-                    app.globalData.userInfo = res.userInfo;
-                    _this.setData({
-                        userInfo: res.userInfo,
-                        hasUserInfo: true,
-                    });
-                },
-            });
-        }
-    },
-    getUserInfo: function (e) {
-        console.log(e);
-        app.globalData.userInfo = e.detail.userInfo;
-        this.setData({
-            userInfo: e.detail.userInfo,
-            hasUserInfo: true,
-        });
-    },
-});
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBRUEsSUFBTSxHQUFHLEdBQUcsTUFBTSxFQUFjLENBQUE7QUFFaEMsSUFBSSxDQUFDO0lBQ0gsSUFBSSxFQUFFO1FBQ0osS0FBSyxFQUFFLGFBQWE7UUFDcEIsUUFBUSxFQUFFLEVBQUU7UUFDWixXQUFXLEVBQUUsS0FBSztRQUNsQixPQUFPLEVBQUUsRUFBRSxDQUFDLE9BQU8sQ0FBQyw4QkFBOEIsQ0FBQztLQUNwRDtJQUVELFdBQVc7UUFDVCxFQUFFLENBQUMsVUFBVSxDQUFDO1lBQ1osR0FBRyxFQUFFLGNBQWM7U0FDcEIsQ0FBQyxDQUFBO0lBQ0osQ0FBQztJQUNELE1BQU07UUFBTixpQkEyQkM7UUExQkMsSUFBSSxHQUFHLENBQUMsVUFBVSxDQUFDLFFBQVEsRUFBRTtZQUMzQixJQUFJLENBQUMsT0FBTyxDQUFDO2dCQUNYLFFBQVEsRUFBRSxHQUFHLENBQUMsVUFBVSxDQUFDLFFBQVE7Z0JBQ2pDLFdBQVcsRUFBRSxJQUFJO2FBQ2xCLENBQUMsQ0FBQTtTQUNIO2FBQU0sSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLE9BQU8sRUFBRTtZQUc1QixHQUFHLENBQUMscUJBQXFCLEdBQUcsVUFBQSxHQUFHO2dCQUM3QixLQUFJLENBQUMsT0FBTyxDQUFDO29CQUNYLFFBQVEsRUFBRSxHQUFHLENBQUMsUUFBUTtvQkFDdEIsV0FBVyxFQUFFLElBQUk7aUJBQ2xCLENBQUMsQ0FBQTtZQUNKLENBQUMsQ0FBQTtTQUNGO2FBQU07WUFFTCxFQUFFLENBQUMsV0FBVyxDQUFDO2dCQUNiLE9BQU8sRUFBRSxVQUFBLEdBQUc7b0JBQ1YsR0FBRyxDQUFDLFVBQVUsQ0FBQyxRQUFRLEdBQUcsR0FBRyxDQUFDLFFBQVEsQ0FBQTtvQkFDdEMsS0FBSSxDQUFDLE9BQU8sQ0FBQzt3QkFDWCxRQUFRLEVBQUUsR0FBRyxDQUFDLFFBQVE7d0JBQ3RCLFdBQVcsRUFBRSxJQUFJO3FCQUNsQixDQUFDLENBQUE7Z0JBQ0osQ0FBQzthQUNGLENBQUMsQ0FBQTtTQUNIO0lBQ0gsQ0FBQztJQUNELFdBQVcsWUFBQyxDQUFNO1FBQ2hCLE9BQU8sQ0FBQyxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUE7UUFDZCxHQUFHLENBQUMsVUFBVSxDQUFDLFFBQVEsR0FBRyxDQUFDLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQTtRQUMzQyxJQUFJLENBQUMsT0FBTyxDQUFDO1lBQ1gsUUFBUSxFQUFFLENBQUMsQ0FBQyxNQUFNLENBQUMsUUFBUTtZQUMzQixXQUFXLEVBQUUsSUFBSTtTQUNsQixDQUFDLENBQUE7SUFDSixDQUFDO0NBQ0YsQ0FBQyxDQUFBIiwic291cmNlc0NvbnRlbnQiOlsiLy8gaW5kZXgudHNcbi8vIOiOt+WPluW6lOeUqOWunuS+i1xuY29uc3QgYXBwID0gZ2V0QXBwPElBcHBPcHRpb24+KClcblxuUGFnZSh7XG4gIGRhdGE6IHtcbiAgICBtb3R0bzogJ0hlbGxvIFdvcmxkJyxcbiAgICB1c2VySW5mbzoge30sXG4gICAgaGFzVXNlckluZm86IGZhbHNlLFxuICAgIGNhbklVc2U6IHd4LmNhbklVc2UoJ2J1dHRvbi5vcGVuLXR5cGUuZ2V0VXNlckluZm8nKSxcbiAgfSxcbiAgLy8g5LqL5Lu25aSE55CG5Ye95pWwXG4gIGJpbmRWaWV3VGFwKCkge1xuICAgIHd4Lm5hdmlnYXRlVG8oe1xuICAgICAgdXJsOiAnLi4vbG9ncy9sb2dzJyxcbiAgICB9KVxuICB9LFxuICBvbkxvYWQoKSB7XG4gICAgaWYgKGFwcC5nbG9iYWxEYXRhLnVzZXJJbmZvKSB7XG4gICAgICB0aGlzLnNldERhdGEoe1xuICAgICAgICB1c2VySW5mbzogYXBwLmdsb2JhbERhdGEudXNlckluZm8sXG4gICAgICAgIGhhc1VzZXJJbmZvOiB0cnVlLFxuICAgICAgfSlcbiAgICB9IGVsc2UgaWYgKHRoaXMuZGF0YS5jYW5JVXNlKSB7XG4gICAgICAvLyDnlLHkuo4gZ2V0VXNlckluZm8g5piv572R57uc6K+35rGC77yM5Y+v6IO95Lya5ZyoIFBhZ2Uub25Mb2FkIOS5i+WQjuaJjei/lOWbnlxuICAgICAgLy8g5omA5Lul5q2k5aSE5Yqg5YWlIGNhbGxiYWNrIOS7pemYsuatoui/meenjeaDheWGtVxuICAgICAgYXBwLnVzZXJJbmZvUmVhZHlDYWxsYmFjayA9IHJlcyA9PiB7XG4gICAgICAgIHRoaXMuc2V0RGF0YSh7XG4gICAgICAgICAgdXNlckluZm86IHJlcy51c2VySW5mbyxcbiAgICAgICAgICBoYXNVc2VySW5mbzogdHJ1ZSxcbiAgICAgICAgfSlcbiAgICAgIH1cbiAgICB9IGVsc2Uge1xuICAgICAgLy8g5Zyo5rKh5pyJIG9wZW4tdHlwZT1nZXRVc2VySW5mbyDniYjmnKznmoTlhbzlrrnlpITnkIZcbiAgICAgIHd4LmdldFVzZXJJbmZvKHtcbiAgICAgICAgc3VjY2VzczogcmVzID0+IHtcbiAgICAgICAgICBhcHAuZ2xvYmFsRGF0YS51c2VySW5mbyA9IHJlcy51c2VySW5mb1xuICAgICAgICAgIHRoaXMuc2V0RGF0YSh7XG4gICAgICAgICAgICB1c2VySW5mbzogcmVzLnVzZXJJbmZvLFxuICAgICAgICAgICAgaGFzVXNlckluZm86IHRydWUsXG4gICAgICAgICAgfSlcbiAgICAgICAgfSxcbiAgICAgIH0pXG4gICAgfVxuICB9LFxuICBnZXRVc2VySW5mbyhlOiBhbnkpIHtcbiAgICBjb25zb2xlLmxvZyhlKVxuICAgIGFwcC5nbG9iYWxEYXRhLnVzZXJJbmZvID0gZS5kZXRhaWwudXNlckluZm9cbiAgICB0aGlzLnNldERhdGEoe1xuICAgICAgdXNlckluZm86IGUuZGV0YWlsLnVzZXJJbmZvLFxuICAgICAgaGFzVXNlckluZm86IHRydWUsXG4gICAgfSlcbiAgfSxcbn0pXG4iXX0=
+      }
+      self.setData({
+        array: self.data.array
+      });
+      this.data.isBusy = false;
+    },'get');
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    console.log("xial")
+    // wx.startPullDownRefresh()
+    //在标题栏中显示加载
+    // wx.showNavigationBarLoading()
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '测试',
+      path: '/pages/index/index',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  }
+
+})

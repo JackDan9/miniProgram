@@ -1,5 +1,55 @@
 /**app.wxss**/
-.container {
+/**app.wxss**/
+@import "./iconfont/iconfont.wxss";
+
+.header {
+  width: 100%;
+  height: 257rpx;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+.header .map {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  width: 100%;
+  height: 552rpx;
+  bottom: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.footer .footer-text {
+  color: #e83428;
+  font-size: 22rpx;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 24rpx;
+}
+
+.footer .footer-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.hand {
+  height: 429rpx;
+  width: 273rpx;
+  position: absolute;
+  right: -90rpx;
+  top: 813rpx;
+}
+
+/* .container {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -7,4 +57,4 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}  */

@@ -1,12 +1,15 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/content/content",
+    "pages/contentDetails/contentDetails",
+    "pages/contentShare/contentShare",
     "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "BetterWork",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
