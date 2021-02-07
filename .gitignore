@@ -1,3 +1,5 @@
 ./node_modules
 yarn-error.log
+.venv
+.vscode
 ./better_work/node_modules
