@@ -33,7 +33,6 @@ function post(cb, requestMethod = "post") {
       // wifi/2g/3g/4g/unknown(Android下不常见的网络类型)/none(无网络)
       var networkType = res.networkType
       if (networkType != "none") {
-
         //检查是否需要加载动画
         if (self.loadingState) {
           wx.showLoading({
@@ -58,6 +57,8 @@ function post(cb, requestMethod = "post") {
           }, // 设置请求的 header
           success: function (res) {
             // success
+            wx.hideLoading();
+            wx.hideToast();
           },
           fail: function (ex) {
             // fail

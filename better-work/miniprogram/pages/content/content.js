@@ -1,9 +1,8 @@
 // pages/content/content.js
 var apiHelper = require("../../utils/api.js");
 Page({
-
   /**
-   * 页面的初始数据
+   * @description 页面的初始数据
    */
   data: {
     newsArray: [],
@@ -19,6 +18,10 @@ Page({
     currentPageIndex: 1, //当前请求全局页数
     currentDateIsNoData: true, //当前天是否还有数据
   },
+  /**
+   * @function toPage
+   * @param {*} event 
+   */
   toPage: function(event) {
     wx.showToast({
       title: `暂未开放！`,
@@ -127,7 +130,9 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * @function onLoad
+   * @param {*} options 
+   * @description 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     // options 中的 scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene

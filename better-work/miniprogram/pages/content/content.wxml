@@ -1,6 +1,6 @@
 <!--pages/content/content.wxml -->
 <swiper previous-margin="{{previousMargin}}rpx" next-margin="{{nextMargin}}rpx" indicator-dots="{{false}}" bindchange="swiperChange" current='{{swiperIndex}}'>
-  <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="{{index}}">
+  <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="index">
     <swiper-item>
       <view class="content">
         <view class='content_header'>
@@ -29,15 +29,16 @@
     </swiper-item>
   </block>
 </swiper>
-<view class='myActionSheet' bindtap='cancelShare' animation="{{animation}}">
+
+<view class='share-operation' bindtap='cancelShare' animation="{{animation}}">
   <view class='ul' catchtap="nothing">
-    <button open-type='share'>
+    <button class="share-btn" open-type='share'>
       <icon class='iconfont icon-wechat'></icon> 微信好友
     </button>
-    <button bindtap="saveShare">
+    <button class="share-btn" bindtap="saveShare">
       <icon class='iconfont icon-erweimafenxiang'></icon> 保存分享
     </button>
-    <button bindtap='cancelShare'>
+    <button class="share-btn" bindtap='cancelShare'>
       <image mode="aspectFill" src="/imgs/save-cancel.svg" style="width: 32rpx; height: 32rpx;"></image>取消
       <!-- <icon class="iconfont icon-jurassic_cancle-save"></icon>取消 -->
     </button>

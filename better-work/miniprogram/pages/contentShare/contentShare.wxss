@@ -1,6 +1,6 @@
 /* pages/contentShare/contentShare.wxss */
 
-.content-share{
+.content-share-container {
   height: 100%;
   width: 100%;
   position: fixed;
@@ -8,31 +8,40 @@
   box-sizing: border-box;
 }
 
-canvas {
+.content-share-canvas {
   /* border: 1px solid red; */
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
   box-sizing: border-box;
 }
 
-.foot-button {
+.content-share-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 120rpx;
   width: 100%;
-  background: #010101;
+  position: absolute;
   bottom: 0;
   left: 0;
-  position: absolute;
+  background: #010101;
 }
 
-.foot-button button {
+.content-share-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 84rpx;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 100rpx;
-  width: 580rpx;
-  height: 84rpx;
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   margin-top: -42rpx;
   left: 50%;
-  margin-left: -290rpx;
+  margin-left: -290rpx; */
   font-size: 32rpx;
   color: #fff;
-  line-height: 84rpx;
+  /* line-height: 84rpx; */
 }

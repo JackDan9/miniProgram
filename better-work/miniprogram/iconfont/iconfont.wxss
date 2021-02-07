@@ -26,11 +26,14 @@
 
 .icon-erweimafenxiang:before {
   content: "\e603";
+  color: #33ddbb;
+  font-size: 38rpx;
 }
 
 .icon-wechat:before {
   content: "\e600";
   color: #3bd230;
+  font-size: 38rpx;
 }
 
 .icon-chakan:before {

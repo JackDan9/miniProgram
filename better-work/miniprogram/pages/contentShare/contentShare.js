@@ -1,6 +1,12 @@
 // pages/contentShare/contentShare.js
 var apiHelper = require("../../utils/api.js");
 
+/**
+ * @function findBreakPoint
+ * @param {@} text 
+ * @param {*} width 
+ * @param {*} context 
+ */
 function findBreakPoint(text, width, context) {
   var min = 0;
   var max = text.length - 1;
