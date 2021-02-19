@@ -66,6 +66,10 @@ ROBOTSTXT_OBEY = True
 #    'better_work_data.pipelines.BetterWorkDataPipeline': 300,
 #}
 
+ITEM_PIPELINES = {
+    'better_work_data.pipelines.parent_news_pipelines.ParentNewsPipeline': 300
+}
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
@@ -86,3 +90,10 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# Mysql configure database information
+MYSQL_HOST = '192.168.1.224' # DATABASE HOST
+MYSQL_DBNAME = 'better_work_data' # DATABASE NAME
+MYSQL_USER = 'root' # DATABASE USER NAME
+MYSQL_PASSWD = 'passw0rd' # DATABASE PASSWORD
+MYSQL_PORT = 3306 # DATABASE PORT 

@@ -6,7 +6,7 @@
 import scrapy
 
 
-class BetterWorkDataItem(scrapy.Item):
+class ParentNewsItems(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     order = scrapy.Field()
@@ -17,4 +17,3 @@ class BetterWorkDataItem(scrapy.Item):
     publish_on = scrapy.Field()
     created_on = scrapy.Field()
     updated_on = scrapy.Field()
-    pass

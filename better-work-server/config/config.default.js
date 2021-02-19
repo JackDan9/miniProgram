@@ -25,6 +25,16 @@ module.exports = appInfo => {
     }
   };
 
+  // add your database config here
+  config.sequelize = {
+    dialect: 'mysql',
+    host: '192.168.1.224',
+    port: 3306,
+    username: 'root',
+    password: 'passw0rd',
+    database: 'better_work_data'
+  }
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
