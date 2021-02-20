@@ -47,31 +47,29 @@ Page({
   /* new  */
   getListNew(pageIndex, pageSize = 10) {
     this.data.isBusy = true;
-    var self = this;
-    apiHelper.paramData.cmd = "articles"; //cmd
+    let self = this;
+    apiHelper.paramData.cmd = "news"; //cmd
     apiHelper.paramData.loadingState = false;
     apiHelper.paramData.param = {
       pageIndex,
       pageSize
     };
     apiHelper.post((res) => {
-      if (res.State == 0) {
-        res.Value=res.Value.data;
-        if (res.Value.length == 0) {
+      if (res.status == 0) {
+        let _data = res.data;
+        if (_data.length == 0) {
           //标识数据已被全部请求完
           self.data.currentDateIsNoData = false;
         } else {
-          self.data.newsArray = self.data.newsArray.concat(res.Value);
+          self.data.newsArray = self.data.newsArray.concat(_data);
           //数据  剩余条数不超过请求条数，说明下一页已没有数据
-          if (res.Value.length < pageSize) {
+          if (_data.length < pageSize) {
             //标识数据已被全部请求完
             self.data.currentDateIsNoData = false;
           } else {
-            let array = res.Value;
+            let array = _data;
             for (let i = 0; i < array.length; i++) {
-              // console.log(array[i].publishDate)
-              let pushdate = array[i].updatedAt.substr(0, 10);
-              // console.log(pushdate)
+              let pushdate = array[i].publish_on.substr(0, 10);
               pushdate = util.getLocalTime(0, new Date(pushdate));
               if (pushdate == util.getLocalTime()) {
                 pushdate = "今天";
@@ -81,7 +79,7 @@ Page({
               let index = self.data.array.findIndex(item => { return item.date == pushdate });
               if (index != -1) {
                 //如果有数据，数组
-                if (res.Value.length > 0) {
+                if (_data.length > 0) {
                   self.data.array[index].array.push(array[i])
                 }
                 else {

@@ -65,15 +65,15 @@ Page({
       pageSize
     };
     apiHelper.post((res) => {
-      if (res.State == 0) {
-        res.Value = res.Value.data;
-        if (res.Value.length == 0) {
+      if (res.status == 0) {
+        let _data = res.data;
+        if (_data.length == 0) {
           //标识数据已被全部请求完
           self.data.currentDateIsNoData = false;
         } else {
-          self.data.newsArray = self.data.newsArray.concat(res.Value);
+          self.data.newsArray = self.data.newsArray.concat(_data);
           //数据  剩余条数不超过请求条数，说明下一页已没有数据
-          if (res.Value.length < pageSize) {
+          if (_data.length < pageSize) {
             //标识数据已被全部请求完
             self.data.currentDateIsNoData = false;
           } else {
@@ -119,7 +119,8 @@ Page({
     })
   },
   /**
-   * 取消分享事件
+   * @function cancelShare
+   * @description 取消分享事件
    */
   cancelShare: function() {
     //收起
@@ -137,15 +138,17 @@ Page({
   onLoad: function(options) {
     // options 中的 scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
     if (options.scene) {
-      var scene = decodeURIComponent(options.scene)
+      let scene = decodeURIComponent(options.scene)
       options.id = scene;
       this.setData({
         backButton: true
       });
     }
-    var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1]; //当前页面
-    var prevPage = pages[pages.length - 2]; //上一个页面
+    let pages = getCurrentPages();
+    console.log(pages);
+    let currPage = pages[pages.length - 1]; //当前页面
+    let prevPage = pages[pages.length - 2]; //上一个页面
+    debugger;
     //判断入口
     if (prevPage) {
       //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
@@ -171,9 +174,9 @@ Page({
         id
       };
       apiHelper.post((res) => {
-        if (res.State == 0 && res.Value) {
+        if (res.status == 0 && res.data) {
           self.setData({
-            newsArray: [res.Value] //当前选择的好友名字赋值给编辑款项中的姓名临时变量
+            newsArray: [res.data] //当前选择的好友名字赋值给编辑款项中的姓名临时变量
           });
           self.loadData();
         }

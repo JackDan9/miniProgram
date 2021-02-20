@@ -1,8 +1,6 @@
 <!--pages/index/index.wxml-->
-<!--pages/index/index.wxml-->
 <scroll-view scroll-y="true" class="index" bindscrolltolower="scrolltolowerNewEvent" enable-flex="true">
-  <!-- <view class=""></view> -->
-  <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length>0}}">
+  <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length > 0}}">
     <text class="title">{{item.date}}</text>
     <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class='content' hover-class="content_hover" bindtap='toPage' id="{{itemContent.id}}">
       <view class="content-title">
@@ -12,7 +10,7 @@
         <text>{{itemContent.summary}}</text>
       </view>
       <view class="content-reporter">
-        <text>中国人民银行 提供</text>
+        <text>{{itemContent.source_name}}提供</text>
       </view>
     </view>
   </view>

@@ -1,0 +1,9 @@
+{
+  "development": {
+    "dialect": "mysql",
+    "host": "192.168.1.224",
+    "username": "root",
+    "password": "passw0rd",
+    "database": "better_work_data"
+  }
+}
