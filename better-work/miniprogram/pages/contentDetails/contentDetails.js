@@ -1,5 +1,5 @@
 // pages/contentDetails/contentDetails.js
-var apiHelper = require("../../utils/api.js");
+let apiHelper = require("../../utils/api.js");
 Page({
   /**
    * 页面的初始数据
@@ -13,10 +13,11 @@ Page({
    */
   onLoad: function(options) {
     console.log(options)
+    let self = this;
     let id = options.id;
-    var self = this;
+
     self.setData({
-      webUrl:id
+      webUrl: id
     });
   },
 
@@ -64,7 +65,12 @@ Page({
 
 
   /**
-   * 用户点击右上角分享
+   * 
+   * @description 用户点击右上角分享
+   */
+  /**
+   * 
+   * @param {*} res 
    */
   onShareAppMessage: function(res) {
     if (res.from === 'button') {

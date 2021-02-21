@@ -15,8 +15,12 @@
 }
 
 .index .list {
-  padding: 0 20rpx;
+  /* padding: 0 20rpx; */
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20rpx);
   box-sizing: border-box;
+
 }
 
 .index .list .title {
@@ -53,14 +57,12 @@
 
 .index .list .content .content-title {
   font-size: 30rpx;
-  /* line-height: 60rpx; */
   color: #000;
   font-weight: bolder;
   letter-spacing: 0.5rpx;
 }
 
 .index .list .content .content-summary {
-  /* text-emphasis: ; */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

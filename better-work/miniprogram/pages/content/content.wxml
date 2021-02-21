@@ -8,7 +8,7 @@
         <view class='content_view'>
           <text class='title'>{{item.title}}</text>
           <view class='page-head-line'></view>
-          <view class='content_font'>{{item.summary}}</view>
+          <view class='content_font'><rich-text nodes="{{item.summary}}"></rich-text></view>
         </view>
         <view class='content_foot'>
           <view class='page-head-line'></view>

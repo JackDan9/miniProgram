@@ -49,7 +49,6 @@ Page({
   },
 
   swiperChange: function(event) {
-    console.log(event);
     if (event.detail.current == this.data.newsArray.length - 1) {
       this.loadData();
     }
@@ -57,8 +56,8 @@ Page({
   /* new  */
   getListNew(pageIndex, pageSize = 10) {
     this.data.isBusy = true;
-    var self = this;
-    apiHelper.paramData.cmd = "articles"; //cmd
+    let self = this;
+    apiHelper.paramData.cmd = "news"; //cmd
     apiHelper.paramData.loadingState = false;
     apiHelper.paramData.param = {
       pageIndex,
@@ -144,34 +143,44 @@ Page({
         backButton: true
       });
     }
+
     let pages = getCurrentPages();
-    console.log(pages);
+
     let currPage = pages[pages.length - 1]; //当前页面
     let prevPage = pages[pages.length - 2]; //上一个页面
-    debugger;
+
     //判断入口
     if (prevPage) {
       //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
-      let swiperIndex = prevPage.data.newsArray.findIndex(item => {
-        return item.id == options.id
+      // let swiperIndex = prevPage.data.newsArray.findIndex(item => {
+      //   return item.id == options.id;
+      // });
+      
+      let _newsArray = prevPage.data.newsArray.find(item => {
+        return item.id == options.id;
       });
+
+      let swiperIndex = _newsArray.newsArray.findIndex(item => {
+        return item.parent_id == options.id;
+      });
+
       this.setData({
         swiperIndex: swiperIndex,
         currentPageIndex: prevPage.data.currentPageIndex,
         currentDateIsNoData: prevPage.data.currentDateIsNoData
       });
       this.setData({
-        newsArray: prevPage.data.newsArray //当前选择的好友名字赋值给编辑款项中的姓名临时变量
+        newsArray: _newsArray.newsArray //当前选择的好友名字赋值给编辑款项中的姓名临时变量
       });
     } else {
       let id = options.id;
-      var self = this;
+      let self = this;
       self.setData({
-        id
+        id: id
       });
       apiHelper.paramData.cmd = "studyAbroadNews/getNewsDetail"; //cmd
       apiHelper.paramData.param = {
-        id
+        id: id
       };
       apiHelper.post((res) => {
         if (res.status == 0 && res.data) {

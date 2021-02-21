@@ -1,5 +1,5 @@
 // pages/contentShare/contentShare.js
-var apiHelper = require("../../utils/api.js");
+let apiHelper = require("../../utils/api.js");
 
 /**
  * @function findBreakPoint
@@ -8,15 +8,16 @@ var apiHelper = require("../../utils/api.js");
  * @param {*} context 
  */
 function findBreakPoint(text, width, context) {
-  var min = 0;
-  var max = text.length - 1;
+  let min = 0;
+  let max = text.length - 1;
   while (min <= max) {
-    var middle = Math.floor((min + max) / 2);
-    var middleWidth = context.measureText(text.substr(0, middle)).width;
-    var oneCharWiderThanMiddleWidth = context.measureText(text.substr(0, middle + 1)).width;
+    let middle = Math.floor((min + max) / 2);
+    let middleWidth = context.measureText(text.substr(0, middle)).width;
+    let oneCharWiderThanMiddleWidth = context.measureText(text.substr(0, middle + 1)).width;
     if (middleWidth <= width && oneCharWiderThanMiddleWidth > width) {
       return middle;
     }
+
     if (middleWidth < width) {
       min = middle + 1;
     } else {
@@ -27,15 +28,22 @@ function findBreakPoint(text, width, context) {
   return -1;
 }
 
+/**
+ * @function breakLinesForCanvas
+ * @param {*} context 
+ * @param {*} text 
+ * @param {*} width 
+ * @param {*} font 
+ */
 function breakLinesForCanvas(context, text, width, font) {
-  var result = [];
+  let result = [];
   if (font) {
     context.font = font;
   }
-  var textArray = text.split('\r\n');
+  let textArray = text.split('\r\n');
   for (let i = 0; i < textArray.length; i++) {
     let item = textArray[i];
-    var breakPoint = 0;
+    let breakPoint = 0;
     while ((breakPoint = findBreakPoint(item, width, context)) !== -1) {
       result.push(item.substr(0, breakPoint));
       item = item.substr(breakPoint);
@@ -46,6 +54,7 @@ function breakLinesForCanvas(context, text, width, font) {
   }
   return result;
 }
+
 Page({
 
   /**
@@ -67,54 +76,61 @@ Page({
         duration: 400,
         timingFunc: 'easeIn'
       }
-    })
-    console.log(options)
+    });
+
+    let self = this;
     let id = options.id;
-    var self = this;
     self.setData({
-      id
+      id: id
     });
     wx.getStorage({
       key: 'shareInfo',
       success: function(res) {
         let info = JSON.parse(res.data)
         self.setData({
-          info
+          info: info
         });
         self.drawInit(info);
       }
-    })
+    });
   },
+
   canvasIdErrorCallback: function(e) {
     console.error(e.detail.errMsg)
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function(e) {},
+
   /**
-   * 绘制图片
+   * @function drawInit
+   * @param {*} info 
+   * @description 绘制图片
    */
   drawInit: function(info) {
-    var contentTitle = info.title;
-    var contentStr = info.intro;
-    var that = this
-    var res = wx.getSystemInfoSync();
-    var canvasWidth = res.windowWidth;
+    let self = this;
+
+    let contentTitle = info.title;
+    let contentStr = info.intro;
+
+    let res = wx.getSystemInfoSync();
+    let canvasWidth = res.windowWidth;
     // 获取canvas的的宽  自适应宽（设备宽/750) px
-    var Rpx = (canvasWidth / 375).toFixed(2);
+    let Rpx = (canvasWidth / 375).toFixed(2);
     //画布高度 -底部按钮高度
-    var canvasHeight = res.windowHeight - Rpx * 59;
+    let canvasHeight = res.windowHeight - Rpx * 59;
     // 使用 wx.createContext 获取绘图上下文 context
-    var context = wx.createCanvasContext('secondCanvas')
+    let context = wx.createCanvasContext('secondCanvas')
     //设置行高
-    var lineHeight = Rpx * 30;
+    let lineHeight = Rpx * 30;
     //左边距
-    var paddingLeft = Rpx * 20;
+    let paddingLeft = Rpx * 20;
     //右边距
-    var paddingRight = Rpx * 20;
+    let paddingRight = Rpx * 20;
     //当前行高
-    var currentLineHeight = Rpx * 20;
+    let currentLineHeight = Rpx * 20;
     //背景颜色默认填充
     context.fillStyle = "#f8f8f8";
     context.fillRect(0, 0, canvasWidth + Rpx * 2, canvasHeight);
@@ -123,7 +139,7 @@ Page({
     //高度减去 图片高度
     context.fillRect(Rpx * 15, Rpx * 15, canvasWidth - Rpx * 30, canvasHeight);
     //设置标题
-    var resultTitle = breakLinesForCanvas(context, contentTitle, canvasWidth - paddingLeft - paddingRight, `${(Rpx * 20).toFixed(0)}px PingFangSC-Regular`);
+    let resultTitle = breakLinesForCanvas(context, contentTitle, canvasWidth - paddingLeft - paddingRight, `${(Rpx * 20).toFixed(0)}px PingFangSC-Regular`);
     //字体颜色
     context.fillStyle = '#000000';
     resultTitle.forEach(function(line, index) {
@@ -131,8 +147,8 @@ Page({
       context.fillText(line, paddingLeft, currentLineHeight);
     });
     //设置  来源 浏览量
-    var source = `来源：${info.source == 1 ? info.author || "原创" : info.reprintSource || "转载"}`
-    var browsingVolume = `浏览量：${info.browseCount||0}`;
+    let source = `来源：${info.source == 1 ? info.author || "原创" : info.reprintSource || "转载"}`
+    let browsingVolume = `浏览量：${info.browseCount||0}`;
     currentLineHeight += Rpx * 30;
     // context.measureText(text).width
     context.font = `${(Rpx * 15).toFixed(0)}px PingFangSC-Regular`;
@@ -151,8 +167,8 @@ Page({
     context.strokeStyle = '#cccccc';
     context.stroke();
     //设置内容
-    var result = breakLinesForCanvas(context, contentStr || '无内容', canvasWidth - paddingLeft - paddingRight, `${(Rpx * 16).toFixed(0)}px PingFangSC-Regular`);
-    console.log(result);
+    let result = breakLinesForCanvas(context, contentStr || '无内容', canvasWidth - paddingLeft - paddingRight, `${(Rpx * 16).toFixed(0)}px PingFangSC-Regular`);
+    // console.log(result);
     //字体颜色
     context.fillStyle = '#666666';
     result.forEach(function(line, index) {
@@ -162,7 +178,7 @@ Page({
     //无广告位 生成文章详情二维码 
     apiHelper.paramData.cmd = "studyAbroadNews/getQrCode"; //cmd
     apiHelper.paramData.param = {
-      id: that.data.id,
+      id: self.data.id,
       width: 200,
       page: "pages/content/content",
       colorR: 0,
@@ -194,8 +210,13 @@ Page({
       }
     });
   },
+
+  /**
+   * @function saveImge
+   * @description 保存图片
+   */
   saveImg: function() {
-    var that = this;
+    let self = this;
     wx.canvasToTempFilePath({
       canvasId: 'secondCanvas',
       fileType: 'jpg',

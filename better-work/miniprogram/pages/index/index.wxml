@@ -2,7 +2,7 @@
 <scroll-view scroll-y="true" class="index" bindscrolltolower="scrolltolowerNewEvent" enable-flex="true">
   <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length > 0}}">
     <text class="title">{{item.date}}</text>
-    <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class='content' hover-class="content_hover" bindtap='toPage' id="{{itemContent.id}}">
+    <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class="content" hover-class="content_hover" bindtap='toPage' id="{{itemContent.id}}">
       <view class="content-title">
         <text>{{itemContent.title}}</text>
       </view>
@@ -10,20 +10,8 @@
         <text>{{itemContent.summary}}</text>
       </view>
       <view class="content-reporter">
-        <text>{{itemContent.source_name}}提供</text>
+        <text>由 {{itemContent.source_name}} 提供</text>
       </view>
     </view>
   </view>
 </scroll-view>
-<!-- <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-</view> -->
