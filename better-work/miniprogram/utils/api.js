@@ -1,37 +1,37 @@
-var CryptoJS = require("../libs/ase");
-var CONFIG = require("../config/config");
+let CryptoJS = require("../libs/ase");
+let CONFIG = require("../config/config");
 function Encrypt(word, key, iv) {
-  var srcs = CryptoJS.enc.Utf8.parse(word);
-  var encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+  let srcs = CryptoJS.enc.Utf8.parse(word);
+  let encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
   //return encrypted.ciphertext.toString();
   return encrypted.toString();
 }
 
 function Decrypt(word, key, iv) {
-  var encryptedHexStr = CryptoJS.enc.Hex.parse(word);
-  var srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-  var decrypt = CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
-  var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+  let encryptedHexStr = CryptoJS.enc.Hex.parse(word);
+  let srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+  let decrypt = CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+  let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
   return decryptedStr.toString();
 }
 
 function post(cb, requestMethod = "post") {
   // check reqData
-  var key = CryptoJS.enc.Utf8.parse(CONFIG.key);
-  var iv = CryptoJS.enc.Utf8.parse(CONFIG.iv);
+  let key = CryptoJS.enc.Utf8.parse(CONFIG.key);
+  let iv = CryptoJS.enc.Utf8.parse(CONFIG.iv);
 
-  var host = CONFIG.host + this.paramData.cmd;
-  var requestData = this.paramData.param;
-  var sign = Encrypt(JSON.stringify(requestData), key, iv);
+  let host = CONFIG.host + this.paramData.cmd;
+  let requestData = this.paramData.param;
+  let sign = Encrypt(JSON.stringify(requestData), key, iv);
   sign = encodeURIComponent(sign);
-  var sendData = `key=${sign}`;
-  var self = this;
+  let sendData = `key=${sign}`;
+  let self = this;
   // console.log(`${host}?${sendData}`);
   wx.getNetworkType({
     success: function (res) {
       // 返回网络类型, 有效值：
       // wifi/2g/3g/4g/unknown(Android下不常见的网络类型)/none(无网络)
-      var networkType = res.networkType
+      let networkType = res.networkType
       if (networkType != "none") {
         //检查是否需要加载动画
         if (self.loadingState) {
@@ -58,7 +58,6 @@ function post(cb, requestMethod = "post") {
           success: function (res) {
             // success
             wx.hideLoading();
-            wx.hideToast();
           },
           fail: function (ex) {
             // fail
@@ -67,9 +66,8 @@ function post(cb, requestMethod = "post") {
           complete: function (response) {
             //关闭加载动画
             wx.hideLoading();
-            wx.hideToast();
 
-            var resData = {
+            let resData = {
               State: 0,
               Value: {},
               Msg: ""

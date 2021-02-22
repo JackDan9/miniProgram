@@ -27,7 +27,7 @@ swiper {
   color: transparent;
 } */
 
-.content .content_view {
+.content .content-view {
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -37,7 +37,7 @@ swiper {
   box-sizing: border-box;
 }
 
-.content .content_view .title {
+.content .content-view .title {
   font-size: 40rpx;
   color: #000;
   text-align: justify;
@@ -47,29 +47,29 @@ swiper {
   margin-bottom: 40rpx;
 }
 
-.content .content_view  .title2 {
+.content .content-view  .title2 {
   font-size: 30rpx;
   color: #999;
   text-align: justify;
   overflow: hidden;
 }
 
-.content .content_view  .title2 .left {
+.content .content-view  .title2 .left {
   float: left;
 }
 
-.content .content_view  .title2 .right {
+.content .content-view  .title2 .right {
   float: right;
 }
 
-.content .content_view .content_font {
-  font-size: 32rpx;
+.content .content-view .content-font {
+  font-size: 28rpx;
   color: #666;
   text-align: justify;
   line-height: 60rpx;
 }
 
-.content .content_view .page-head-line {
+.content .content-view .page-head-line {
   width: 100%;
   height: 2rpx;
   background-color: #eee;
@@ -77,7 +77,7 @@ swiper {
   box-sizing: border-box;
 }
 
-.content .content_header {
+.content .content-header {
   width: auto;
   height: 104rpx;
   box-sizing: border-box;
@@ -89,7 +89,7 @@ swiper {
   background: linear-gradient(-180deg, #fff 0%, rgba(255, 255, 255, 0.00) 100%);
 }
 
-.content  .content_foot {
+.content  .content-foot {
   height: 112rpx;
   width: auto;
   bottom: 0;
@@ -100,14 +100,14 @@ swiper {
   background: #fff;
 }
 
-.content .content_foot .page-head-line {
+.content .content-foot .page-head-line {
   width: 100%;
   height: 2rpx;
   background-color: #eee;
   box-sizing: border-box;
 }
 
-.content .content_foot .chakan-btn {
+.content .content-foot .chakan-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,11 +129,11 @@ swiper {
   padding-right: 4rpx;
 }
 
-.content .content_foot button.back_index {
+.content .content-foot button.back_index {
   left: 230rpx;
 }
 
-.content .content_foot .share-img {
+.content .content-foot .share-img {
   height: 100%;
   width: 20%;
   float: right;
@@ -155,7 +155,7 @@ swiper {
   transform: translateY(-50%);
 }
 
-.content .content_foot image {
+.content .content-foot image {
   height: 32rpx;
   width: 32rpx;
   position: absolute;

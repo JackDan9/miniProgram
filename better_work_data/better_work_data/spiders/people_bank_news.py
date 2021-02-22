@@ -56,6 +56,7 @@ class PeopleBankNewsSpider(scrapy.Spider):
                 parent_news_item['order'] = index
                 parent_news_item['title'] = self.content_title_list[index]
                 parent_news_item['summary'] = ''
+                parent_news_item['summary_html'] = ''
                 parent_news_item['source_type'] = 0
                 parent_news_item['source_name'] = '中国人民银行'
                 parent_news_item['publish_on'] = self.content_date_list[index]
@@ -65,10 +66,10 @@ class PeopleBankNewsSpider(scrapy.Spider):
                     parent_news_item['updated_on'] = datetime.now()
                 # yield parent_news_item
                 try:
-                    sql = "INSERT INTO `parent_news`(`order`, `title`, `summary`, `source_type`, `source_name`, `publish_on`, `created_on`, `updated_on`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
+                    sql = "INSERT INTO `parent_news`(`order`, `title`, `summary`, `summary_html`, `source_type`, `source_name`, `publish_on`, `created_on`, `updated_on`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);"
                     conn = self.db.connect()
                     cursor = conn.cursor()
-                    params = (parent_news_item['order'], parent_news_item['title'], parent_news_item['summary'], parent_news_item['source_type'], parent_news_item['source_name'], parent_news_item['publish_on'], parent_news_item['created_on'], parent_news_item['updated_on'])
+                    params = (parent_news_item['order'], parent_news_item['title'], parent_news_item['summary'], parent_news_item['summary_html'], parent_news_item['source_type'], parent_news_item['source_name'], parent_news_item['publish_on'], parent_news_item['created_on'], parent_news_item['updated_on'])
                     cursor.execute(sql, params)
                     conn.commit()
                 except Exception as e:
@@ -104,9 +105,12 @@ class PeopleBankNewsSpider(scrapy.Spider):
             child_news_item['attachment_name'] = None
             child_news_item['attachment_url'] = None
         content_list = response.xpath('//div[@id="zoom"]/p/text()').extract()
+        content_html_ret = ''
         content_ret = ''
+
         for content in content_list:
-            content_ret += '<p>' + content + '</p>'
+            content_html_ret += '<p>' + content + '</p>' + '<br>'
+            content_ret += content
         
         content_title = response.xpath('//h2[@style="font-size: 16px;color: #333;"]/text()').extract()[0]
         content_date = response.xpath('//td[@align="right"]/text()').extract()[2]
@@ -117,6 +121,7 @@ class PeopleBankNewsSpider(scrapy.Spider):
         child_news_item['site_name'] = '沟通交流'
         child_news_item['title'] = content_title
         child_news_item['summary'] = content_ret
+        child_news_item['summary_html'] = content_html_ret
         child_news_item['url'] = response.url
         child_news_item['mobile_url'] = response.url
         child_news_item['publish_on'] = content_date
@@ -125,12 +130,11 @@ class PeopleBankNewsSpider(scrapy.Spider):
         if child_news_item.get('updated_on') is None:
             child_news_item['updated_on'] = datetime.now()
 
-        child_news_sql = "INSERT INTO `child_news`(`parent_id`, `language`, `author_name`, `site_name`, `title`, `summary`, `url`, `mobile_url`, `is_attachment`, `attachment_name`, `attachment_url`, `publish_on`, `created_on`, `updated_on`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        child_news_sql = "INSERT INTO `child_news`(`parent_id`, `language`, `author_name`, `site_name`, `title`, `summary`, `summary_html`, `url`, `mobile_url`, `is_attachment`, `attachment_name`, `attachment_url`, `publish_on`, `created_on`, `updated_on`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
         try:
             conn = self.db.connect()
             cursor = conn.cursor()
-            params = (child_news_item['parent_id'], child_news_item['language'], child_news_item['author_name'], child_news_item['site_name'], child_news_item['title'], child_news_item['summary'],
-                  child_news_item['url'], child_news_item['mobile_url'], child_news_item['is_attachment'], child_news_item['attachment_name'], child_news_item['attachment_url'], child_news_item['publish_on'], child_news_item['created_on'], child_news_item['updated_on'])
+            params = (child_news_item['parent_id'], child_news_item['language'], child_news_item['author_name'], child_news_item['site_name'], child_news_item['title'], child_news_item['summary'], child_news_item['summary_html'], child_news_item['url'], child_news_item['mobile_url'], child_news_item['is_attachment'], child_news_item['attachment_name'], child_news_item['attachment_url'], child_news_item['publish_on'], child_news_item['created_on'], child_news_item['updated_on'])
             cursor.execute(child_news_sql, params)
             conn.commit()
         except Exception as e:

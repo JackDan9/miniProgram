@@ -16,6 +16,7 @@ module.exports = app => {
         order: INTEGER,
         title: STRING(255),
         summary: TEXT,
+        summary_html: TEXT,
         source_type: INTEGER,
         source_name: STRING(64),
         publish_on: DATE,

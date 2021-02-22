@@ -8,7 +8,7 @@ class ChildNewsService extends Service {
     const { ctx } = this;
 
     const options = {
-      attributes: ['id', 'parent_id', 'language', 'author_name', 'site_name', 'title', 'summary', 'url', 'mobile_url', 'is_attachment', 'attachment_name', 'attachment_url', 'publish_on'],
+      attributes: ['id', 'parent_id', 'language', 'author_name', 'site_name', 'title', 'summary', 'summary_html', 'url', 'mobile_url', 'is_attachment', 'attachment_name', 'attachment_url', 'publish_on'],
       plain: false
     };
 

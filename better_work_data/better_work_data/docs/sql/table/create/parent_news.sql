@@ -3,6 +3,7 @@ CREATE TABLE `parent_news` (
   `order` int(11) DEFAULT NULL COMMENT '新闻排序',
   `title` varchar(255) DEFAULT NULL COMMENT '新闻标题',
   `summary` text DEFAULT NULL COMMENT '新闻描述',
+  `summary_html` text DEFAULT NULL COMMENT '新闻描述H5',
   `source_type` int(11) DEFAULT NULL COMMENT '新闻来源类型',
   `source_name` varchar(64) DEFAULT NULL COMMENT '新闻来源名称',
   `publish_on` datetime DEFAULT NULL COMMENT '新闻更新日期',

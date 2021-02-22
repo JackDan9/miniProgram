@@ -176,7 +176,8 @@ Page({
       context.fillText(line, paddingLeft, currentLineHeight);
     });
     //无广告位 生成文章详情二维码 
-    apiHelper.paramData.cmd = "studyAbroadNews/getQrCode"; //cmd
+    // apiHelper.paramData.cmd = "studyAbroadNews/getQrCode"; //cmd
+    apiHelper.paramData.cmd = "study_abroad_news/get_news_detail"; //cmd
     apiHelper.paramData.param = {
       id: self.data.id,
       width: 200,

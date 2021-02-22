@@ -15,6 +15,7 @@ module.exports = app => {
     site_name: STRING(64),
     title: STRING(255),
     summary: TEXT,
+    summary_html: TEXT,
     url: STRING(255),
     mobile_url: STRING(255),
     is_attachment: BOOLEAN,

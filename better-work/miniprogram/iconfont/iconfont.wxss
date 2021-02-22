@@ -38,12 +38,12 @@
 
 .icon-chakan:before {
   content: "\e69a";
-  color: #333000;
+  color: #abd1f7;
   font-size: 60rpx;
 }
 
 .icon-fenxiang01:before {
   content: "\e6d1";
-  color: #333000;
+  color: #a9bfd5;
   font-size: 60rpx;
 }

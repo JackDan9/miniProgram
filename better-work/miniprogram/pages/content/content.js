@@ -87,8 +87,37 @@ Page({
     }, 'get');
   },
   nothing: function() {},
+  
   /**
-   * 保存分享事件
+   * @function openAttachment
+   * @param {*} event
+   * @description 打开附件 
+   */
+  openAttachment: function(event) {
+    wx.downloadFile({
+      url: event.target.dataset.content, //要预览的PDF的地址
+      success: function (res) {
+        // console.log(res);
+        if (res.statusCode === 200) { //成功
+          let Path = res.tempFilePath; //返回的文件临时地址，用于后面打开本地预览所用
+          wx.openDocument({
+            filePath: Path, //要打开的文件路径
+            showMenu: true,
+            success: function (res) {
+              console.log('打开PDF成功');
+            }
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res); //失败
+      }
+    });
+  },
+  /**
+   * @function saveShare
+   * @param {*} event 
+   * @description 保存分享事件
    */
   saveShare: function(event) {
     console.log('save share event !' + this.data.shareId)
@@ -97,8 +126,11 @@ Page({
       url: `/pages/contentShare/contentShare?id=${this.data.shareId}`
     })
   },
+
   /**
-   * 分享事件
+   * @function share
+   * @param {*} event 
+   * @description 分享事件
    */
   share: function(event) {
     this.data.shareId = event.target.id;
@@ -178,7 +210,8 @@ Page({
       self.setData({
         id: id
       });
-      apiHelper.paramData.cmd = "studyAbroadNews/getNewsDetail"; //cmd
+      // apiHelper.paramData.cmd = "studyAbroadNews/getNewsDetail"; //cmd
+      apiHelper.paramData.cmd = "study_abroad_news/get_news_detail"; //cmd
       apiHelper.paramData.param = {
         id: id
       };

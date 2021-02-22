@@ -3,14 +3,15 @@
   <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="index">
     <swiper-item>
       <view class="content">
-        <view class='content_header'>
+        <view class='content-header'>
         </view>
-        <view class='content_view'>
+        <view class='content-view'>
           <text class='title'>{{item.title}}</text>
           <view class='page-head-line'></view>
-          <view class='content_font'><rich-text nodes="{{item.summary}}"></rich-text></view>
+          <view class='content-font'><rich-text nodes="{{item.summary_html}}"></rich-text></view>
+          <view class="content-attachment" data-title="{{item.attachment_name}}" data-content="{{item.attachment_url}}" wx:if="{{item.is_attachment}}" bindtap="openAttachment">{{item.attachment_name}}</view>
         </view>
-        <view class='content_foot'>
+        <view class='content-foot'>
           <view class='page-head-line'></view>
           <button class="chakan-btn" bindtap='toPage' id="{{item.newsArray[0].url}}">
             <!-- 查看全文 -->

@@ -6,6 +6,7 @@ CREATE TABLE `child_news` (
   `site_name` varchar(64) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `summary` text DEFAULT NULL,
+  `summary_html` text DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `mobile_url` varchar(255) DEFAULT NULL,
   `is_attachment` tinyint(1) DEFAULT NULL,
