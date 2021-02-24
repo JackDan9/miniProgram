@@ -3,3 +3,4 @@ yarn-error.log
 .venv
 .vscode
 ./better_work/node_modules
+.github

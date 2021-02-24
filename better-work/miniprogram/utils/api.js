@@ -1,3 +1,5 @@
+"use strict"; 
+
 let CryptoJS = require("../libs/ase");
 let CONFIG = require("../config/config");
 function Encrypt(word, key, iv) {
@@ -34,11 +36,8 @@ function post(cb, requestMethod = "post") {
       let networkType = res.networkType
       if (networkType != "none") {
         //检查是否需要加载动画
+        self.loadingState = true;
         if (self.loadingState) {
-          wx.showLoading({
-            title: '正在请求...',
-            mask: true
-          });
           wx.showToast({
             title: 'loading...',
             image: '/imgs/loading.gif',
@@ -46,7 +45,7 @@ function post(cb, requestMethod = "post") {
             mask: true
           })
         }
-        self.loadingState = true;
+        
         wx.request({
           url: host,
           data: requestData,
@@ -57,33 +56,30 @@ function post(cb, requestMethod = "post") {
           }, // 设置请求的 header
           success: function (res) {
             // success
-            wx.hideLoading();
+            wx.hideToast();
           },
           fail: function (ex) {
             // fail
             console.log(ex);
           },
           complete: function (response) {
-            //关闭加载动画
-            wx.hideLoading();
-
             let resData = {
-              State: 0,
-              Value: {},
-              Msg: ""
+              status: 0,
+              data: {},
+              message: ""
             }
             if (response.errMsg != "request:ok") {
-              resData.State = 1;
-              resData.Value = {};
-              resData.Msg = "系统错误,请稍后重试！";
+              resData.status = 1;
+              resData.data = {};
+              resData.message = "系统错误,请稍后重试！";
             } else if (response.statusCode == 200) {
               resData = response.data;
             }
             typeof cb == "function" && cb(resData)
-            if (resData.State == 1) {
+            if (resData.status == 1) {
               wx.showModal({
                 title: '错误提示',
-                content: resData.Msg,
+                content: resData.message,
                 showCancel: false,
                 success: function (res) {
                   

@@ -1,16 +1,33 @@
 <!--pages/index/index.wxml-->
-<scroll-view scroll-y="true" class="index" bindscrolltolower="scrolltolowerNewEvent" enable-flex="true">
-  <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length > 0}}">
-    <text class="title">{{item.date}}</text>
-    <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class="content" hover-class="content_hover" bindtap='toPage' id="{{itemContent.id}}">
-      <view class="content-title">
-        <text>{{itemContent.title}}</text>
-      </view>
-      <view class="content-summary">
-        <text>{{itemContent.summary}}</text>
-      </view>
-      <view class="content-reporter">
-        <text>由 {{itemContent.source_name}} 提供</text>
+<scroll-view scroll-y="true" class="index" bindscrolltolower="scrollToLowerNewEvent" enable-flex="true">
+  <view class="header">
+    <view class="header-item">
+      <image class="icon" src="/imgs/news.svg" alt="经济新闻"></image>
+      <text class="title">经济新闻</text>
+    </view>
+    <view class="header-item">
+      <image class="icon" src="/imgs/recurite.svg" alt="招聘信息" />
+      <text class="title">招聘信息</text>
+    </view>
+    <view class="header-item">
+      <image class="icon" src="/imgs/policy.svg" alt="经济政策"></image>
+      <text class="title">经济政策</text>
+    </view>
+  </view>
+
+  <view class="container">
+    <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length > 0}}">
+      <text class="title">{{item.date}}</text>
+      <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class="content" hover-class="content_hover" bindtap='toPage' id="{{itemContent.id}}">
+        <view class="content-title">
+          <text>{{itemContent.title}}</text>
+        </view>
+        <view class="content-summary">
+          <text>{{itemContent.summary}}</text>
+        </view>
+        <view class="content-reporter">
+          <text>由 {{itemContent.source_name}} 提供</text>
+        </view>
       </view>
     </view>
   </view>

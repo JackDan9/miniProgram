@@ -1,39 +1,55 @@
+"use strict";
+
 // pages/index/index.js
-var apiHelper = require("../../utils/api.js");
-var util = require("../../utils/util.js");
+let apiHelper = require("../../utils/api.js");
+let util = require("../../utils/util.js");
 let app = getApp();
+
 Page({
   /**
-   * 页面的初始数据
+   * @description 页面的初始数据
    */
   data: {
     isIphoneX: app.globalData.isIphoneX ? true : false,
-    currentPageIndex: 1,//当前请求全局页数
-    currentDate: util.getLocalTime(),//当前请求日期
-    currentDateIsNoData: true,//当前天是否还有数据
-    isBusy: false,//是否正在请求数据中
-    fastScroll: true,//第一次滚动加载
-    array: [],//日期结构数据
-    newsArray: []//所有文章存放数组
+    currentPageIndex: 1, //当前请求全局页数
+    currentDate: util.getLocalTime(), //当前请求日期
+    currentDateIsNoData: true, //当前天是否还有数据
+    isBusy: false, //是否正在请求数据中
+    fastScroll: true, //第一次滚动加载
+    array: [], //日期结构数据
+    newsArray: [] //所有文章存放数组
   },
+  /**
+   * @function toPage
+   * @param {*} event
+   * @description 
+   */
   toPage: function (event) {
     wx.navigateTo({
       url: `/pages/content/content?id=${event.currentTarget.id}`
     })
   },
   /**
-   * 生命周期函数--监听页面加载
+   * @function onLoad
+   * @param {*} options 
+   * @description 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getListNew(this.data.currentPageIndex);
   },
+  /**
+   * @function scrollToLowerNewEvent
+   * @param {*} e 
+   * @description 滚动加载 new
+   */
+  scrollToLowerNewEvent: function (e) {
+    let self = this;
 
-  //滚动加载 new 
-  scrolltolowerNewEvent: function (e) {
-    if (!this.data.isBusy) {
+    if (!self.data.isBusy) {
       //查看当天是否还有数据
       if (this.data.currentDateIsNoData) {
-        this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length-1].order;
+        // this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length-1].order;
+        this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length - 1].id;
         this.getListNew(this.data.currentPageIndex);
       } else {
         wx.showToast({
@@ -44,10 +60,17 @@ Page({
       }
     }
   },
-  /* new  */
+  /**
+   * @function getListNew
+   * @param {*} pageIndex 
+   * @param {*} pageSize 
+   * @description 获取新的新闻数据
+   */
   getListNew(pageIndex, pageSize = 10) {
-    this.data.isBusy = true;
     let self = this;
+
+    self.data.isBusy = true;
+    
     apiHelper.paramData.cmd = "news"; //cmd
     apiHelper.paramData.loadingState = false;
     apiHelper.paramData.param = {
@@ -62,7 +85,7 @@ Page({
           self.data.currentDateIsNoData = false;
         } else {
           self.data.newsArray = self.data.newsArray.concat(_data);
-          //数据  剩余条数不超过请求条数，说明下一页已没有数据
+          //数据剩余条数不超过请求条数，说明下一页已没有数据
           if (_data.length < pageSize) {
             //标识数据已被全部请求完
             self.data.currentDateIsNoData = false;

@@ -1,7 +1,6 @@
 /* pages/index/index.wxss */
-
 .index {
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   height: 100%;
   /* background-image: url(http://aojixiaoxi.ks3-cn-beijing.ksyun.com/smallroutine/GPAApplet.png);
@@ -11,16 +10,64 @@
   background: #f8f8f8;
   display: flex;
   flex-direction: column;
-  align-items: center; /*垂直居中*//* justify-content: center; 水平居中 */
+  align-items: center; /* 垂直居中justify-content: center; 水平居中 */
+}
+
+.index .header {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 99%;
+  height: 140rpx;
+  margin-top: 40rpx;
+}
+
+.header .header-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 100%;
+  /* text-align: center; */
+  /* background: chartreuse; */
+  margin-left: 20rpx;
+  border-radius: 6px;
+  margin: 0 auto;
+}
+
+.header .header-item:first-child {
+  margin-left: 0;
+}
+
+.header .header-item .icon {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.header .header-item .title {
+  margin-top: 5rpx;
+  font-size: 26rpx;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 0.1rpx;
+}
+
+.index .container {
+  /* margin-top: 160rpx; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  width: calc(100% - 20rpx);
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 .index .list {
   /* padding: 0 20rpx; */
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  width: calc(100% - 20rpx);
+  width: calc(100% - 20rpx); */
   box-sizing: border-box;
-
 }
 
 .index .list .title {
