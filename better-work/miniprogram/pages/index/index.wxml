@@ -1,15 +1,15 @@
 <!--pages/index/index.wxml-->
 <scroll-view scroll-y="true" class="index" bindscrolltolower="scrollToLowerNewEvent" enable-flex="true">
   <view class="header">
-    <view class="header-item">
+    <view id="news" class="header-item" bindtap="openNews">
       <image class="icon" src="/imgs/news.svg" alt="经济新闻"></image>
       <text class="title">经济新闻</text>
     </view>
-    <view class="header-item">
+    <view id="recurite" class="header-item" bindtap="openRecurite">
       <image class="icon" src="/imgs/recurite.svg" alt="招聘信息" />
       <text class="title">招聘信息</text>
     </view>
-    <view class="header-item">
+    <view id="policy" class="header-item" bindtap="openPolicy">
       <image class="icon" src="/imgs/policy.svg" alt="经济政策"></image>
       <text class="title">经济政策</text>
     </view>

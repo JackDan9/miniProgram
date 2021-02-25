@@ -30,6 +30,16 @@ Page({
     })
   },
   /**
+   * @function openNews
+   * @param {*} event
+   * @description  
+   */
+  openNews: function(event) {
+    wx.navigateTo({
+      url: 'url',
+    })
+  },
+  /**
    * @function onLoad
    * @param {*} options 
    * @description 生命周期函数--监听页面加载
