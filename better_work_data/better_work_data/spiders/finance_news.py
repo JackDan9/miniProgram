@@ -133,9 +133,15 @@ class FinanceNewsSpider(scrapy.Spider):
             content_html_ret += content_html_list[content_html_index]
         
         if len(response.xpath('//div[@class="content"]/div[@class="content_title"]/p').extract()) > 0:
-            content_title = response.xpath('//div[@class="content"]/div[@class="content_title"]/p/text()').extract()[0] + ',' + response.xpath('//div[@class="content"]/div[@class="content_title"]/p/font/text()').extract()[0]
+            if len(response.xpath('//div[@class="content"]/div[@class="content_title"]/p/font').extract()) > 0:
+                content_title = response.xpath('//div[@class="content"]/div[@class="content_title"]/p/font/text()').extract()[0]
+            else:
+                content_title = response.xpath('//div[@class="content"]/div[@class="content_title"]/p/text()').extract()[0] + ',' + response.xpath('//div[@class="content"]/div[@class="content_title"]/p/font/text()').extract()[0]
         else:
-            content_title = response.xpath('//div[@class="content"]/div[@class="content_title"]/text()').extract()[0]
+            if len(response.xpath('//div[@class="content"]/div[@class="content_title"]/font').extract()) > 0:
+                content_title = response.xpath('//div[@class="content"]/div[@class="content_title"]/font/text()').extract()[0]
+            else:
+                content_title = response.xpath('//div[@class="content"]/div[@class="content_title"]/text()').extract()[0]
 
         content_site_name = response.xpath('//div[@class="content"]/div[@class="content_info"]/span/text()').extract()[0][3:]
         content_author_name = response.xpath('//div[@class="content"]/div[@class="content_info"]/span/text()').extract()[1][3:]

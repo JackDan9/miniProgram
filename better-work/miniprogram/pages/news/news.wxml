@@ -1,0 +1,27 @@
+<!--pages/news/news.html-->
+<scroll-view 
+  class="news-container" 
+  scroll-x="false" 
+  scroll-y="true" 
+  upper-threshold="50" 
+  lower-threshold="50" 
+  scroll-top="0" 
+  scroll-left="0" 
+  scroll-into-view="" 
+  scroll-with-animation="false" 
+  enable-back-to-top="false" 
+  bindscrolltoupper="" 
+  bindscrolltolower="scrollToLowerNewsEvent" 
+  bindscroll=""
+  enable-flex="true">
+  <view 
+    class="news-list" 
+    hover-class="none" 
+    hover-stop-propagation="false"
+    wx:for="{{news}}"
+    wx:for-item="item"
+    wx:key="date"
+    wx:if="{{}}">
+    <text class="title">{{}}</text>
+  </view>
+</scroll-view>
