@@ -1,7 +1,41 @@
 # miniProgram
+
+- 关于经济新闻和招聘的微信小程序`better-work`。
+- 关于经济新闻和招聘的微信小程序接口服务`better-work-server`。
+- 关于经济新闻和招聘的微信小程序数据服务`better_work_data`。
+
+## 技术栈
+- <em>项目设计</em>
+- <em>架构设计</em>
+- <em>接口设计</em>
+- <em>迭代更新</em>
+- 小程序开发使用<em>WXML</em>、<em>WXSS</em>、<em>JSON</em>、<em>JavaScript</em>进行原生落地、接口端服务使用<em>Egg.js</em>、<em>mysql2</em>、<em>egg-sequelize</em>、<em>Nginx</em>进行HTTP接口的落地和转发、数据端服务使用<em>Scrapy</em>、<em>MariaDB</em>、<em>Request</em>对原始数据进行封装，作为基础数据层为应用提供原始数据。
+
+## 功能列表
+
+  - [X] 经济要闻
+  - [X] 经济政策
+  - [X] 经济招聘
+  - [X] 搜索
+  - [ ] 注册 
+  - [ ] 登录
+  - [ ] 点赞
+  - [ ] 收藏
+  - [ ] 编辑
+  - [X] 截图分享
+  - [X] 小程序分享
+  - [X] 关于
+  - [X] 要闻详情
+  - [X] 政策详情
+  - [X] 经济招聘信息
+  - [X] 服务接口监控 
+
+
+> https://eggjs.org/zh-cn/intro/
+
 ## 项目里边生成了不同类型的文件:
 - `.json`后缀的JSON配置文件；
-- `.wxml`后缀的WXML 模板文件；
+- `.wxml`后缀的WXML模板文件；
 - `.wxss`后缀的WXSS样式文件；
 - `.js`后缀的JS脚本逻辑文件
 

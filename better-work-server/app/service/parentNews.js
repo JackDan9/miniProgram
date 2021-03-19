@@ -2,6 +2,7 @@
 
 const Service = require('egg').Service;
 
+
 class ParentNewsService extends Service {
   async list({offset = 0, limit = 10}) {
     const { ctx } = this; // const ctx = this.ctx;
