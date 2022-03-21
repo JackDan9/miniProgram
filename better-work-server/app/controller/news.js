@@ -3,7 +3,8 @@
 const Controller = require('egg').Controller;
 
 class NewsController extends Controller {
-  async index() {
+  // 获取新闻
+  async getNews() {
     const { ctx } = this; // const ctx = this.ctx;
 
     const query = {
@@ -15,6 +16,7 @@ class NewsController extends Controller {
     const childNewsList = await ctx.service.childNews.list();
 
     // result data
+    // 优化到一层for循环
     let _retData = [];
     parentNewsList.map((parentNewsItem) => {
       let _childNewsData = [];
@@ -64,6 +66,11 @@ class NewsController extends Controller {
   async destroy() {
     const ctx = this.ctx;
     ctx.status = 200;
+  }
+
+  // 删除新闻
+  async delNews() {
+
   }
 };
 
