@@ -1,4 +1,4 @@
-CREATE TABLE `child_news` (
+CREATE TABLE `news_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL,
   `language` varchar(16) DEFAULT NULL,
@@ -12,8 +12,8 @@ CREATE TABLE `child_news` (
   `is_attachment` tinyint(1) DEFAULT NULL,
   `attachment_name` varchar(255) DEFAULT NULL,
   `attachment_url` varchar(255) DEFAULT NULL,
-  `publish_on` datetime DEFAULT NULL,
-  `created_on` datetime DEFAULT NULL,
-  `updated_on` datetime DEFAULT NULL,
+  `publish_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

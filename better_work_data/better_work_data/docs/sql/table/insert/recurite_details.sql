@@ -1,0 +1,33 @@
+INSERT INTO `recurite_details` (
+  `parent_id`,
+  `language`,
+  `author_name`,
+  `site_name`,
+  `title`,
+  `summary`,
+  `summary_html`,
+  `url`,
+  `mobile_url`,
+  `is_attachment`,
+  `attachment_name`,
+  `attachment_url`,
+  `publish_at`,
+  `created_at`,
+  `updated_at`
+) VALUES (
+  1,
+  "language",
+  "author_name",
+  "site_name",
+  "title",
+  "summary",
+  "summary_html",
+  "url",
+  "mobile_url",
+  "is_attachment",
+  "attachment_name",
+  "attachment_url",
+  NOW(),
+  NOW(),
+  NOW()
+);
