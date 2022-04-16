@@ -20,6 +20,7 @@
   width: 99%;
   height: 140rpx;
   margin-top: 40rpx;
+  margin-bottom: 40rpx;
 }
 
 .header .header-item {
@@ -98,7 +99,7 @@
   margin-bottom: 0;
 }
 
-.index .list .content_hover {
+.index .list .content-hover {
   background: #e8e8e8;
 }
 

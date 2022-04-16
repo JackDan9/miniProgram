@@ -15,8 +15,8 @@ var formatNumber = function (n) {
 }
 
 /* 
-   *单位转换
-   */
+  *单位转换
+  */
 var unitChange = function (int, unit = false) {
   return int > 10000 ? (int / 10000).toFixed(1) + (unit ? '' : '万') : int;
 }

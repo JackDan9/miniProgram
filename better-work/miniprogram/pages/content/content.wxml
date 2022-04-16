@@ -1,34 +1,34 @@
 <!--pages/content/content.wxml -->
 <swiper previous-margin="{{previousMargin}}rpx" next-margin="{{nextMargin}}rpx" indicator-dots="{{false}}" bindchange="swiperChange" current='{{swiperIndex}}'>
-  <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="index">
+  <!-- <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="index"> -->
     <swiper-item>
       <view class="content">
         <view class='content-header'>
         </view>
         <view class='content-view'>
-          <text class='title'>{{item.title}}</text>
+          <text class='title'>{{newsDetail.title}}</text>
           <view class='page-head-line'></view>
-          <view class='content-font'><rich-text nodes="{{item.summary_html}}"></rich-text></view>
-          <view class="content-attachment" data-title="{{item.attachment_name}}" data-content="{{item.attachment_url}}" wx:if="{{item.is_attachment}}" bindtap="openAttachment">{{item.attachment_name}}</view>
+          <view class='content-font'><rich-text nodes="{{newsDetail.summary_html}}"></rich-text></view>
+          <view class="content-attachment" data-title="{{newsDetail.attachment_name}}" data-content="{{newsDetail.attachment_url}}" wx:if="{{newsDetail.is_attachment}}" bindtap="openAttachment">{{newsDetail.attachment_name}}</view>
         </view>
         <view class='content-foot'>
           <view class='page-head-line'></view>
-          <button class="chakan-btn" bindtap='toPage' id="{{item.newsArray[0].url}}">
+          <button class="chakan-btn" bindtap='toPage' id="{{newsDetail.newsArray[0].url}}">
             <!-- 查看全文 -->
             <icon class="iconfont icon-chakan"></icon> 查看全文
           </button>
           <button wx:if="{{backButton}}" class='back_index' bindtap='toPageIndex'>返回首页</button>
-          <view class='share-img' id="{{item.id}}" data-title="{{item.title}}" data-content='{{item.summary}}' bindtap='share'>
-            <!-- <image mode="aspectFill" src='/imgs/share.png' id="{{item.id}}" data-title="{{item.title}}" data-content='{{item.summary}}' bindtap='share'></image> -->
-            <!-- <text id="{{item.id}}">分享</text> -->
+          <view class='share-img' id="{{newsDetail.id}}" data-title="{{newsDetail.title}}" data-content='{{newsDetail.summary}}' bindtap='share'>
+            <!-- <image mode="aspectFill" src='/imgs/share.png' id="{{newsDetail.id}}" data-title="{{newsDetail.title}}" data-content='{{newsDetail.summary}}' bindtap='share'></image> -->
+            <!-- <text id="{{newsDetail.id}}">分享</text> -->
             <button class='share-btn'>
-              <icon id="{{item.id}}" data-title="{{item.title}}" data-content='{{item.summary}}' class="iconfont icon-fenxiang01" bindtap='share'></icon>
+              <icon id="{{newsDetail.id}}" data-title="{{newsDetail.title}}" data-content='{{newsDetail.summary}}' class="iconfont icon-fenxiang01" bindtap='share'></icon>
             </button>
           </view>
         </view>
       </view>
     </swiper-item>
-  </block>
+  <!-- </block> -->
 </swiper>
 
 <view class='share-operation' bindtap='cancelShare' animation="{{animation}}">

@@ -2,6 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/content/content",
+    "pages/news/news",
+    "pages/policy/policy",
+    "pages/recurite/recurite",
     "pages/contentDetails/contentDetails",
     "pages/contentShare/contentShare",
     "pages/logs/logs"
@@ -9,7 +12,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "BetterWork",
+    "navigationBarTitleText": "咨询大白",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

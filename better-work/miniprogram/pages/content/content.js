@@ -6,6 +6,7 @@ Page({
    */
   data: {
     newsArray: [],
+    newsDetail: {},
     animation: '',
     shareTitle:"",
     shareContent:"",
@@ -43,7 +44,7 @@ Page({
       //查看当天是否还有数据
       if (this.data.currentDateIsNoData) {
         this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length - 1].order;
-        this.getListNew(this.data.currentPageIndex);
+        this.getNewsList(this.data.currentPageIndex);
       }
     }
   },
@@ -53,17 +54,19 @@ Page({
       this.loadData();
     }
   },
-  /* new  */
-  getListNew(pageIndex, pageSize = 10) {
+  /**
+   * 获取新闻列表
+   */
+  getNewsList(pageIndex, pageSize = 10) {
     this.data.isBusy = true;
     let self = this;
-    apiHelper.paramData.cmd = "news"; //cmd
+    apiHelper.paramData.cmd = "getNewsList"; //cmd getNewsList
     apiHelper.paramData.loadingState = false;
     apiHelper.paramData.param = {
       pageIndex,
       pageSize
     };
-    apiHelper.post((res) => {
+    apiHelper.request((res) => {
       if (res.status == 0) {
         let _data = res.data;
         if (_data.length == 0) {
@@ -84,7 +87,7 @@ Page({
         newsArray: self.data.newsArray
       });
       this.data.isBusy = false;
-    }, 'get');
+    }, 'post');
   },
   nothing: function() {},
   
@@ -182,7 +185,7 @@ Page({
     let prevPage = pages[pages.length - 2]; //上一个页面
 
     //判断入口
-    if (prevPage) {
+    if (false) {
       //直接调用上一个页面的setData()方法，把数据存到上一个页面即编辑款项页面中去  
       // let swiperIndex = prevPage.data.newsArray.findIndex(item => {
       //   return item.id == options.id;
@@ -211,18 +214,21 @@ Page({
         id: id
       });
       // apiHelper.paramData.cmd = "studyAbroadNews/getNewsDetail"; //cmd
-      apiHelper.paramData.cmd = "study_abroad_news/get_news_detail"; //cmd
+      // apiHelper.paramData.cmd = "study_abroad_news/get_news_detail"; //cmd
+      apiHelper.paramData.cmd = "getNewsDetail";
       apiHelper.paramData.param = {
         id: id
       };
-      apiHelper.post((res) => {
-        if (res.status == 0 && res.data) {
+      apiHelper.request((res) => {
+        console.log("res: ", res);
+        if (res.code == 200 && res.result) {
           self.setData({
-            newsArray: [res.data] //当前选择的好友名字赋值给编辑款项中的姓名临时变量
+            newsArray: [res.result],
+            newsDetail: res.result //当前选择的好友名字赋值给编辑款项中的姓名临时变量
           });
           self.loadData();
         }
-      });
+      }, 'post');
     }
   },
 

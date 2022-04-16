@@ -12,7 +12,7 @@ Page({
    */
   data: {
     isIphoneX: app.globalData.isIphoneX ? true : false,
-    currentPageIndex: 1, //当前请求全局页数
+    currentPageNumber: 1, //当前请求全局页数
     currentDate: util.getLocalTime(), //当前请求日期
     currentDateIsNoData: true, //当前天是否还有数据
     isBusy: false, //是否正在请求数据中
@@ -32,13 +32,32 @@ Page({
   },
   /**
    * @function openNews
-   * @param {*} event
-   * @description  
+   * @param {object} event
+   * @description 跳转到经济新闻页面
    */
   openNews: function(event) {
     wx.navigateTo({
-      url: 'url',
-    })
+      url: '/pages/news/news',
+    });
+  },
+  /**
+   * @function openPolicy
+   * @param {object} event
+   * @description 跳转到经济政策页面
+   */
+  openPolicy: function(event) {
+    wx.navigateTo({
+      url: '/pages/policy/policy',
+    });
+  },
+  /**
+   * 
+   * @param {*} options 
+   */
+  openRecurite: function(event) {
+    wx.navigateTo({
+      url: '/pages/recurite/recurite',
+    });
   },
   /**
    * @function onLoad
@@ -46,7 +65,7 @@ Page({
    * @description 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getListNew(this.data.currentPageIndex);
+    this.getNewsList(this.data.currentPageNumber);
   },
   /**
    * @function scrollToLowerNewEvent
@@ -59,9 +78,9 @@ Page({
     if (!self.data.isBusy) {
       //查看当天是否还有数据
       if (this.data.currentDateIsNoData) {
-        // this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length-1].order;
-        this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length - 1].id;
-        this.getListNew(this.data.currentPageIndex);
+        // this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length-1].order;
+        this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length - 1].id;
+        this.getNewsList(this.data.currentPageNumber);
       } else {
         wx.showToast({
           title: '没有数据了',
@@ -72,25 +91,26 @@ Page({
     }
   },
   /**
-   * @function getListNew
-   * @param {*} pageIndex 
+   * @function getNewsList
+   * @param {*} pageNumber 
    * @param {*} pageSize 
    * @description 获取新的新闻数据
    */
-  getListNew(pageIndex, pageSize = 10) {
+  getNewsList(pageNumber, pageSize = 10) {
     let self = this;
 
     self.data.isBusy = true;
     
-    apiHelper.paramData.cmd = "news"; //cmd
+    apiHelper.paramData.cmd = "getNewsList"; // cmd
     apiHelper.paramData.loadingState = false;
+
     apiHelper.paramData.param = {
-      pageIndex,
+      pageNumber,
       pageSize
     };
-    apiHelper.post((res) => {
-      if (res.status == 0) {
-        let _data = res.data;
+    apiHelper.request((res) => {
+      if (res.code == 200) {
+        let _data = res && res.result && res.result.rows;
         if (_data.length == 0) {
           //标识数据已被全部请求完
           self.data.currentDateIsNoData = false;
@@ -103,7 +123,7 @@ Page({
           } else {
             let array = _data;
             for (let i = 0; i < array.length; i++) {
-              let pushdate = array[i].publish_on.substr(0, 10);
+              let pushdate = array[i].publish_at.substr(0, 10);
               pushdate = util.getLocalTime(0, new Date(pushdate));
               if (pushdate == util.getLocalTime()) {
                 pushdate = "今天";
@@ -119,7 +139,7 @@ Page({
                 else {
                   //标识当天数据已被全部请求完
                   self.data.currentDateIsNoData = false;
-                  self.data.currentPageIndex = 1;
+                  self.data.currentPageNumber = 1;
                 }
               } else {
                 self.data.array.push({
@@ -136,7 +156,7 @@ Page({
         array: self.data.array
       });
       this.data.isBusy = false;
-    },'get');
+    }, 'post');
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -2,6 +2,10 @@
 /**app.wxss**/
 @import "./iconfont/iconfont.wxss";
 
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}
+
 .header {
   /* width: 100%;
   height: 257rpx;

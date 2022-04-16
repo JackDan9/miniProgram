@@ -17,18 +17,18 @@ function Decrypt(word, key, iv) {
   return decryptedStr.toString();
 }
 
-function post(cb, requestMethod = "post") {
+function request(cb, requestMethod = "post") {
   // check reqData
   let key = CryptoJS.enc.Utf8.parse(CONFIG.key);
   let iv = CryptoJS.enc.Utf8.parse(CONFIG.iv);
 
-  let host = CONFIG.host + this.paramData.cmd;
-  let requestData = this.paramData.param;
-  let sign = Encrypt(JSON.stringify(requestData), key, iv);
-  sign = encodeURIComponent(sign);
-  let sendData = `key=${sign}`;
+  let host = CONFIG.host+ this.paramData.cmd;
+  let requestData = this.paramData.param; // 请求中的数据
+  // let sign = Encrypt(JSON.stringify(requestData), key, iv);
+  // sign = encodeURIComponent(sign);
+  // let sendData = `key=${sign}`;
   let self = this;
-  // console.log(`${host}?${sendData}`);
+
   wx.getNetworkType({
     success: function (res) {
       // 返回网络类型, 有效值：
@@ -48,7 +48,7 @@ function post(cb, requestMethod = "post") {
         
         wx.request({
           url: host,
-          data: requestData,
+          data: requestData, // requestData传递过去是一个string类型
           method: requestMethod, // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
           header: {
             'content-type': 'application/x-www-form-urlencoded',
@@ -107,5 +107,5 @@ module.exports = {
     "cmd": "",
     "loadingState": true
   },
-  post: post
+  request: request
 }
