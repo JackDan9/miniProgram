@@ -9,16 +9,16 @@
 
 from better_work_data.db.db_helper import DBHelper
 
-
-class ParentNewsPipeline(object):
+# 新闻表
+class NewsPipeline(object):
     # 连接数据库
     def __init__(self):
         self.db = DBHelper()
     
-    def process_item(self, parent_news_item, spider):
+    def process_item(self, news_item, spider):
         # 插入数据库
-        if parent_news_item['is_parent']:
-            self.db.insert_parent_news(parent_news_item)
+        if news_item['is_parent']:
+            self.db.insert_news(news_item)
         else:
-            self.db.insert_child_news(parent_news_item)
-        return parent_news_item
+            self.db.insert_news_details(news_item)
+        return news_item

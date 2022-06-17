@@ -9,8 +9,8 @@
 
 from better_work_data.db.db_helper import DBHelper
 
-
-class ChildNewsPipeline(object):
+# 
+class NewsDetailsPipeline(object):
     # 连接数据库
     def __init__(self):
         self.db = DBHelper()
