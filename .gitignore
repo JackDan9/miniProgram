@@ -4,3 +4,7 @@ yarn-error.log
 .vscode
 ./better_work/node_modules
 .github
+.DS_Store
+better-work-server/scripts/
+better_work_data/build/
+better-work/yarn.lock
