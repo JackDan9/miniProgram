@@ -67,7 +67,7 @@ ROBOTSTXT_OBEY = True
 #}
 
 ITEM_PIPELINES = {
-    'better_work_data.pipelines.parent_news_pipelines.ParentNewsPipeline': 300
+    'better_work_data.pipelines.news_pipelines.NewsPipeline': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -92,8 +92,8 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # Mysql configure database information
-MYSQL_HOST = '192.168.1.224' # DATABASE HOST
+MYSQL_HOST = 'localhost' # DATABASE HOST
 MYSQL_DBNAME = 'better_work_data' # DATABASE NAME
 MYSQL_USER = 'root' # DATABASE USER NAME
-MYSQL_PASSWD = 'passw0rd' # DATABASE PASSWORD
+MYSQL_PASSWD = 'Djj@Wff1314' # DATABASE PASSWORD
 MYSQL_PORT = 3306 # DATABASE PORT 
