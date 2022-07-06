@@ -1,3 +1,19 @@
-<view class="recurite-container">
-  <h3>请先关注一下经济要闻</h3>
-</view>
+<scroll-view class="recurite-container" scroll-y="true" bindscrolltolower="scrollToLowerRecuriteEvent"
+  enable-flex="true">
+  <view class="recurite-list" hover-class="none" hover-stop-propagation="false" wx:for="{{dateArray}}"
+    wx:for-item="item" wx:key="date" wx:if="{{item.array.length > 0}}">
+    <text class="title">{{item.date}}</text>
+    <view id="{{itemContent.id}}" class="content" hover-class="content-cover" wx:for="{{item.array}}"
+      wx:for-item="itemContent" wx:key="id" bindtap="toRecuriteDetail">
+      <view class="content-title">
+        <text>{{itemContent.title}}</text>
+      </view>
+      <view class="content-summary">
+        <text>{{itemContent.summary}}</text>
+      </view>
+      <view class="content-reporter">
+        <text>由 {{itemContent.source_name}} 提供</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

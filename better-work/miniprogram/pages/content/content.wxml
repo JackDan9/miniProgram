@@ -1,5 +1,10 @@
 <!--pages/content/content.wxml -->
-<swiper previous-margin="{{previousMargin}}rpx" next-margin="{{nextMargin}}rpx" indicator-dots="{{false}}" bindchange="swiperChange" current='{{swiperIndex}}'>
+<swiper 
+  previous-margin="{{previousMargin}}rpx" 
+  next-margin="{{nextMargin}}rpx" 
+  indicator-dots="{{false}}" 
+  bindchange="swiperChange" 
+  current="{{swiperIndex}}">
   <!-- <block wx:for="{{newsArray}}" wx:for-item="item" wx:key="index"> -->
     <swiper-item>
       <view class="content">

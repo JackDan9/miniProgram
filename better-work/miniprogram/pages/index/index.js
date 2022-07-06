@@ -65,21 +65,22 @@ Page({
    * @description 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getNewsList(this.data.currentPageNumber);
+    this.getNewsList(this.data.currentPageNumber); 
   },
   /**
-   * @function scrollToLowerNewEvent
+   * @function toLoadMore
    * @param {*} e 
-   * @description 滚动加载 new
+   * @description 向下滚动加载更多了
    */
-  scrollToLowerNewEvent: function (e) {
+  toLoadMore: function (e) {
     let self = this;
-
+    console.log("sele.data.isBusy");
     if (!self.data.isBusy) {
       //查看当天是否还有数据
       if (this.data.currentDateIsNoData) {
         // this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length-1].order;
         this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length - 1].id;
+        console.log("this.data.currentPageNumber: ", this.data.currentPageNumber);
         this.getNewsList(this.data.currentPageNumber);
       } else {
         wx.showToast({

@@ -209,13 +209,20 @@ Page({
       });
     } else {
       let id = options.id;
+      let type = options.type;
+      let cmd = "getNewsDetail";
+      if(type=="recurite") {
+        cmd = "getRecuriteDetail";
+      }
       let self = this;
       self.setData({
         id: id
       });
       // apiHelper.paramData.cmd = "studyAbroadNews/getNewsDetail"; //cmd
       // apiHelper.paramData.cmd = "study_abroad_news/get_news_detail"; //cmd
-      apiHelper.paramData.cmd = "getNewsDetail";
+      // apiHelper.paramData.cmd = "getNewsDetail";
+
+      apiHelper.paramData.cmd = cmd;
       apiHelper.paramData.param = {
         id: id
       };

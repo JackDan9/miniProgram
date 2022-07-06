@@ -10,6 +10,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "@vant/weapp": "^1.10.2"
   },
   "devDependencies": {
     "miniprogram-api-typings": "^2.8.3-1",

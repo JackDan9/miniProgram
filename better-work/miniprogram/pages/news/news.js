@@ -13,7 +13,7 @@ Page({
    */
   data: {
     isPhoneX: app.globalData.isPhoneX ? true : false,
-    currentPageIndex: 1, 
+    currentPageNumber: 1, 
     currentDate: util.getLocalTime(), 
     currentDateIsNoData: true,
     isBusy: false,
@@ -37,22 +37,22 @@ Page({
    * @description 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getNewsList(this.data.currentPageIndex);
+    this.getNewsList(this.data.currentPageNumber);
   },
   /**
    * @function getNewsList
-   * @param {number} pageIndex 
+   * @param {number} pageNumber 
    * @param {number} pageSize 
    * @description 获取经济新闻信息
    */
-  getNewsList(pageIndex, pageSize =  10) {
+  getNewsList(pageNumber, pageSize =  10) {
     let self = this;
     self.data.isBusy = true;
 
     apiHelper.paramData.cmd = "getNewsList"; // cmd
     apiHelper.paramData.loadingState = false;
     apiHelper.paramData.param = {
-      pageIndex,
+      pageNumber,
       pageSize
     };
 
@@ -77,6 +77,8 @@ Page({
                 _publish_date = "今天";
               } else if(_publish_date == util.getLocalTime(-1)) {
                 _publish_date = "昨天";
+              } else if(_publish_date == util.getLocalTime(-2)) {
+                _publish_date = "前天";
               }
 
               let _index = self.data.dateArray.findIndex(item => {
@@ -90,7 +92,7 @@ Page({
                 } else {
                   // 标识当天数据已被全部请求完
                   self.data.currentDateIsNoData = false;
-                  self.data.currentPageIndex = 1;
+                  self.data.currentPageNumber = 1;
                 }
               } else {
                 self.data.dateArray.push({
@@ -120,8 +122,9 @@ Page({
     if(!self.data.isBusy) {
       // 查看当天是否还输数据
       if(this.data.currentDateIsNoData) {
-        this.data.currentPageIndex = this.data.newsArray[this.data.newsArray.length - 1].id;
-        this.getNewsList(this.data.currentPageIndex);
+        this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length - 1].id;
+        console.log("this.data.currentPageNumber: ", this.data.currentPageNumber);
+        this.getNewsList(this.data.currentPageNumber);
       } else {
         wx.showToast({
           title: '没有数据了',

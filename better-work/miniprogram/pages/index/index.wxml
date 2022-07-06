@@ -1,5 +1,5 @@
 <!--pages/index/index.wxml-->
-<scroll-view scroll-y="true" class="index" bindscrolltolower="scrollToLowerNewEvent" enable-flex="true">
+<scroll-view scroll-y="true" class="index" bindscrolltolower="toLoadMore" enable-flex="true">
   <view class="header">
     <view id="news" class="header-item" bindtap="openNews">
       <image class="icon" src="/imgs/news.svg" alt="经济要闻"></image>
@@ -10,8 +10,8 @@
       <text class="title">招聘信息</text>
     </view>
     <view id="policy" class="header-item" bindtap="openPolicy">
-      <image class="icon" src="/imgs/history.svg" alt="经典人物"></image>
-      <text class="title">经典人物</text>
+      <image class="icon" src="/imgs/history.svg" alt="人物"></image>
+      <text class="title">人物</text>
     </view>
   </view>
 
