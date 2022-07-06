@@ -1,10 +1,12 @@
-// 之前的糟糕设计
+/**
+ * 新闻详情表格
+ */
 'use strcit';
 
 module.exports = app => {
   const { INTEGER, STRING, DATE, TEXT, BOOLEAN } = app.Sequelize;
 
-  const ChildNews = app.model.define('child_news', {
+  const NewsDetails = app.model.define('news_details', {
     id: {
       type: INTEGER,
       primaryKey: true,
@@ -22,10 +24,10 @@ module.exports = app => {
     is_attachment: BOOLEAN,
     attachment_name: STRING(255),
     attachment_url: STRING(255),
-    publish_on: DATE,
-    created_on: DATE,
-    updated_on: DATE
+    publish_at: DATE,
+    created_at: DATE,
+    updated_at: DATE
   });
 
-  return ChildNews;
+  return NewsDetails;
 }

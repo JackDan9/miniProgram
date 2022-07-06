@@ -28,10 +28,10 @@ module.exports = appInfo => {
   // add your database config here
   config.sequelize = {
     dialect: 'mysql',
-    host: '192.168.1.224',
+    host: '106.15.47.133',
     port: 3306,
     username: 'root',
-    password: 'passw0rd',
+    password: 'Djj@Wff1314',
     database: 'better_work_data'
   }
 
@@ -39,6 +39,29 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
+
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+    domainWhiteList: ["http://localhost:8888"]
+  }
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET, POST, DELETE, PUT'
+  }
+
+  config.jwt = {
+    secret: "_1612516262795_6562",
+    enable: false
+  }
+
+  config.wehcat = {
+    token: 'weixin', // 基础配置的token信息
+    appid: 'wx8a709a03e1584e6b', // 微信公众号的appid信息
+    encodingAESKey: 'H6xJLje9n5JjgAFiCsmk0TfIkcUpiGrURAUxtnRui0G', // 微信公众号的encodingAESKey信息
+  }
 
   return {
     ...config,

@@ -1,3 +1,4 @@
+// 之前的糟糕设计
 'use strcit';
 
 module.exports = app => {
