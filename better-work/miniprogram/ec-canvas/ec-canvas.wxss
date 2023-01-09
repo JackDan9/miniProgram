@@ -1,0 +1,6 @@
+.ec-canvas {
+  position: relative;
+  width: 100vw;
+  height: 50vh;
+  z-index: 1;
+}

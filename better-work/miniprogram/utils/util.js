@@ -8,9 +8,22 @@ exports.formatTime = function (date) {
     var hour = date.getHours();
     var minute = date.getMinutes();
     var second = date.getSeconds();
-    return ([year, month, day].map(formatNumber).join('/') +
-        ' ' +
-        [hour, minute, second].map(formatNumber).join(':'));
+    const week = {
+      "0": "日",
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六"
+    };
+    return (
+      [month, day].map(formatNumber).join('/') + 
+      ' ' + 
+      "星期" + week[date.getDay().toString()] +
+      ' ' +
+      [hour, minute].map(formatNumber).join(':')
+    )
 };
 var formatNumber = function (n) {
     var s = n.toString();

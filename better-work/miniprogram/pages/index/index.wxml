@@ -1,33 +1,53 @@
-<!--pages/index/index.wxml-->
-<scroll-view scroll-y="true" class="index" bindscrolltolower="toLoadMore" enable-flex="true">
-  <view class="header">
-    <view id="news" class="header-item" bindtap="openNews">
-      <image class="icon" src="/imgs/news.svg" alt="经济要闻"></image>
-      <text class="title">经济要闻</text>
-    </view>
-    <view id="recurite" class="header-item" bindtap="openRecurite">
-      <image class="icon" src="/imgs/recurite.svg" alt="招聘信息" />
-      <text class="title">招聘信息</text>
-    </view>
-    <view id="policy" class="header-item" bindtap="openPolicy">
-      <image class="icon" src="/imgs/history.svg" alt="人物"></image>
-      <text class="title">人物</text>
-    </view>
+<scroll-view scroll-y="true" class="container" enable-flex="true">
+  <view class="china-map-container">
+    <ec-canvas id="mychart-china-map" canvas-id="chart-china-map" ec="{{ ec }}"></ec-canvas>
   </view>
+  <view class="content-container">
+    <view class="search-container">
+      <view class="weui-search-bar">
+        <view class="weui-search-bar__form">
+          <!-- 搜索框 -->
+          <view class="weui-search-bar__box">
+            <input type="text" class="weui-search-bar__input" placeholder="搜索内容" bindconfirm="onSearch" value="北京" />
+            <icon class="weui-icon-search_in-box" type="search" size="80rpx"></icon>
+          </view>
+        </view>
+        <!-- 取消搜索 -->
+        <!-- <view class="weui-search-bar__cancel-btn" bindtap='hideInput'>取消</view> -->
+      </view>
+    </view>
 
-  <view class="container">
-    <view class='list' wx:for="{{array}}" wx:for-item="item" wx:key="date" wx:if="{{item.array.length > 0}}">
-      <text class="title">{{item.date}}</text>
-      <view wx:for="{{item.array}}" wx:for-item="itemContent" wx:key="id" class="content" hover-class="content-hover" bindtap='toPage' id="{{itemContent.id}}">
-        <view class="content-title">
-          <text>{{itemContent.title}}</text>
+    <view wx:if="{{weatherData}}" class="weather-container">
+      <view class="weather-head">
+        <view class="weather-head-title">
+          {{weatherData.cityTitle}}
         </view>
-        <view class="content-summary">
-          <text>{{itemContent.summary}}</text>
+        <view class="weather-head-extra">
+          {{weatherData.obsTime}}
         </view>
-        <view class="content-reporter">
-          <text>由 {{itemContent.source_name}} 提供</text>
+      </view>
+      <view class="weather-body">
+        <p>天气: {{weatherData.text}}</p>
+        <p>温度: {{weatherData.temp}} °C</p>
+        <p>风向: {{weatherData.windDir}}</p>
+        <p>风级: {{weatherData.windScale}}级</p>
+        <p>风速: {{weatherData.windSpeed}}</p>
+        <p>湿度: {{weatherData.humidity}}%</p>
+        <p>降雨量: {{weatherData.precip}}毫米</p>
+        <p>大气压强: {{weatherData.pressure}}百帕</p>
+        <p>能见度: {{weatherData.vis}}公里</p>
+      </view>
+    </view>
+    <view wx:if="{{isCityShow}}" class="city-intro-container">
+      <view class="weather-head">
+        <view class="weather-head-title">
+          城市介绍·美食·景点
         </view>
+      </view>
+      <view class="city-intro-body">
+        <rich-text nodes="{{weatherData.introduction}}"></rich-text>
+        <p>美食: {{weatherData.palatableDishs}}</p>
+        <p>景点: {{weatherData.sight}}</p>
       </view>
     </view>
   </view>

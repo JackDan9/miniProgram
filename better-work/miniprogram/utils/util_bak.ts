@@ -5,9 +5,20 @@ export const formatTime = (date: Date) => {
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
+  const week = {
+    "0": "日",
+    "1": "一",
+    "2": "二",
+    "3": "三",
+    "4": "四",
+    "5": "五",
+    "6": "六"
+  };
 
   return (
-    [year, month, day].map(formatNumber).join('/') +
+    [month, day].map(formatNumber).join('/') + 
+    ' ' + 
+    "星期" + week[date.getDay() + ""] +
     ' ' +
     [hour, minute, second].map(formatNumber).join(':')
   )

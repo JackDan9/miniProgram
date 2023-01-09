@@ -6,7 +6,7 @@
   },
   "miniprogramRoot": "miniprogram/",
   "compileType": "miniprogram",
-  "libVersion": "2.8.2",
+  "libVersion": "2.29.1",
   "projectname": "better-work",
   "scripts": {
     "beforeCompile": "npm run tsc",

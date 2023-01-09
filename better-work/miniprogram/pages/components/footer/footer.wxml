@@ -1,7 +1,0 @@
-<!-- /pages/components/footer/footer.wxml -->
-<template name="footer">
-  <view class="footer">
-    <image class="footer-img" src="/imgs/footer.png" mode="aspectFill"></image>
-    <text class="footer-text">better work</text>
-  </view>
-</template>

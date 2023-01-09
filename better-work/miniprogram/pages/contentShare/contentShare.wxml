@@ -1,8 +1,0 @@
-<!--pages/contentShare/contentShare.wxml-->
-<view class='content-share-container'>
-  <!-- canvas.wxml -->
-  <canvas class="content-share-canvas" canvas-id="secondCanvas" binderror="canvasIdErrorCallback"></canvas>
-  <view class='content-share-footer'>
-    <button class="content-share-btn" bindtap='saveImg'>保存卡片</button>
-  </view>
-</view>

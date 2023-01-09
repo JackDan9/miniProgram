@@ -1,18 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/content/content",
-    "pages/news/news",
-    "pages/policy/policy",
-    "pages/recurite/recurite",
-    "pages/contentDetails/contentDetails",
-    "pages/contentShare/contentShare",
     "pages/logs/logs"
   ],
   "window": {
+    "backgroundColor": "#eeeeee",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "咨询大白",
+    "navigationBarTitleText": "Motoko",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

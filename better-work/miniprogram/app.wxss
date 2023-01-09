@@ -2,6 +2,11 @@
 /**app.wxss**/
 @import "./iconfont/iconfont.wxss";
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
 }
@@ -53,13 +58,3 @@ body {
   right: -90rpx;
   top: 813rpx;
 }
-
-/* .container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-}  */

@@ -1,8 +1,12 @@
 "use strict";
 
 // pages/index/index.js
+import * as echarts from '../../ec-canvas/echarts';
+import geoJson from './chinaMap';
+
 let apiHelper = require("../../utils/api.js");
 let util = require("../../utils/util.js");
+let chartOption = require('../index/chartOption');
 
 let app = getApp();
 
@@ -17,8 +21,19 @@ Page({
     currentDateIsNoData: true, //当前天是否还有数据
     isBusy: false, //是否正在请求数据中
     fastScroll: true, //第一次滚动加载
+    isLoaded: false,
+    isDisposed: false,
     array: [], //日期结构数据
-    newsArray: [] //所有文章存放数组
+    chartData: [],
+    newsArray: [], //所有文章存放数组
+    weatherData: null, // 天气数据
+    isCityShow: false, // 城市介绍是否显示,
+    location: '北京市',
+    ec: {
+      // 将lazyLoad设为true后，需要手动初始化图表
+      lazyLoad: true,
+      disableTouch: true,
+    },
   },
   /**
    * @function toPage
@@ -31,139 +46,93 @@ Page({
     })
   },
   /**
-   * @function openNews
-   * @param {object} event
-   * @description 跳转到经济新闻页面
-   */
-  openNews: function(event) {
-    wx.navigateTo({
-      url: '/pages/news/news',
-    });
-  },
-  /**
-   * @function openPolicy
-   * @param {object} event
-   * @description 跳转到经济政策页面
-   */
-  openPolicy: function(event) {
-    wx.navigateTo({
-      url: '/pages/policy/policy',
-    });
-  },
-  /**
-   * 
-   * @param {*} options 
-   */
-  openRecurite: function(event) {
-    wx.navigateTo({
-      url: '/pages/recurite/recurite',
-    });
-  },
-  /**
    * @function onLoad
    * @param {*} options 
    * @description 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getNewsList(this.data.currentPageNumber); 
+    this.onSearch();
   },
-  /**
-   * @function toLoadMore
-   * @param {*} e 
-   * @description 向下滚动加载更多了
-   */
-  toLoadMore: function (e) {
-    let self = this;
-    console.log("sele.data.isBusy");
-    if (!self.data.isBusy) {
-      //查看当天是否还有数据
-      if (this.data.currentDateIsNoData) {
-        // this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length-1].order;
-        this.data.currentPageNumber = this.data.newsArray[this.data.newsArray.length - 1].id;
-        console.log("this.data.currentPageNumber: ", this.data.currentPageNumber);
-        this.getNewsList(this.data.currentPageNumber);
-      } else {
-        wx.showToast({
-          title: '没有数据了',
-          icon: 'none',
-          duration: 500
-        })
-      }
-    }
-  },
-  /**
-   * @function getNewsList
-   * @param {*} pageNumber 
-   * @param {*} pageSize 
-   * @description 获取新的新闻数据
-   */
-  getNewsList(pageNumber, pageSize = 10) {
+  onSearch: function (e) {
     let self = this;
 
-    self.data.isBusy = true;
-    
-    apiHelper.paramData.cmd = "getNewsList"; // cmd
+    const location = e ? e.detail.value : 'beijing';
+
+    self.setData({
+      location: location
+    })
+    apiHelper.paramData.cmd = `getCityWeather`; // cmd
     apiHelper.paramData.loadingState = false;
-
     apiHelper.paramData.param = {
-      pageNumber,
-      pageSize
-    };
+      location: location
+    }
+
     apiHelper.request((res) => {
       if (res.code == 200) {
-        let _data = res && res.result && res.result.rows;
-        if (_data.length == 0) {
-          //标识数据已被全部请求完
-          self.data.currentDateIsNoData = false;
-        } else {
-          self.data.newsArray = self.data.newsArray.concat(_data);
-          //数据剩余条数不超过请求条数，说明下一页已没有数据
-          if (_data.length < pageSize) {
-            //标识数据已被全部请求完
-            self.data.currentDateIsNoData = false;
-          } else {
-            let array = _data;
-            for (let i = 0; i < array.length; i++) {
-              let pushdate = array[i].publish_at.substr(0, 10);
-              pushdate = util.getLocalTime(0, new Date(pushdate));
-              if (pushdate == util.getLocalTime()) {
-                pushdate = "今天";
-              } else if (pushdate == util.getLocalTime(-1)) {
-                pushdate = "昨天";
-              }
-              let index = self.data.array.findIndex(item => { return item.date == pushdate });
-              if (index != -1) {
-                //如果有数据，数组
-                if (_data.length > 0) {
-                  self.data.array[index].array.push(array[i])
-                }
-                else {
-                  //标识当天数据已被全部请求完
-                  self.data.currentDateIsNoData = false;
-                  self.data.currentPageNumber = 1;
-                }
-              } else {
-                self.data.array.push({
-                  date: pushdate,
-                  array: [array[i]]
-                })
-              }
-            }
-            self.data.currentDateIsNoData = true;
-          }
-        }
+        res.now.obsTime = util.formatTime(new Date(res.now.obsTime))
+        self.setData({
+          weatherData: res.now
+        });
+        self.setData({
+          isCityShow: res.now.introduction && res.now.palatableDishs && res.now.sight
+        });
+        let _chartData = [];
+        _chartData.push({
+          name: res.now.cityName,
+          value: [parseFloat(res.now.lon), parseFloat(res.now.lat), parseFloat(res.now.temp)]
+        });
+        self.setData({
+          chartData: _chartData
+        });
+
+        this.init(this.data.chartData);
       }
-      self.setData({
-        array: self.data.array
-      });
-      this.data.isBusy = false;
     }, 'post');
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    // 获取组件
+    this.ecComponent = this.selectComponent("#mychart-china-map");
+  },
 
+  init: function(optionData) {
+    
+    this.ecComponent.init((canvas, width, height, dpr) => {
+      // 获取组件的 canvas、width、height 后的回调函数
+      // 在这里初始化图表
+      const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height,
+        devicePixelRatio: dpr // new
+      });
+      
+      canvas.setChart(chart);
+      echarts.registerMap('china', geoJson);
+      chart.setOption(chartOption.getOption(optionData));
+
+      // 将图表实例绑定到 this 上，可以在其他成员函数（如 dispose）中访问
+      this.chart = chart;
+
+      this.setData({
+        isLoaded: true,
+        isDisposed: false
+      });
+
+      // 注意这里一定要返回 chart 实例，否则会影响事件处理等
+      return chart;
+    })
+  },
+
+  dispose: function () {
+    if (this.chart) {
+      this.chart.dispose();
+    }
+
+    this.setData({
+      isDisposed: true
+    });
   },
 
   /**
@@ -191,17 +160,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log("xial")
-    // wx.startPullDownRefresh()
-    //在标题栏中显示加载
-    // wx.showNavigationBarLoading()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
   },
 
   /**
@@ -213,7 +177,7 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '测试',
+      title: '城市天气·城市介绍·城市美食·城市美景',
       path: '/pages/index/index',
       success: function (res) {
         // 转发成功
