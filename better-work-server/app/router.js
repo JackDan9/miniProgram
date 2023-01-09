@@ -30,5 +30,9 @@ module.exports = app => {
   // router.delete('/delRole', controller.admin.role.delRole);
   router.post('/wechat', controller.wechat.wechat.wechat);
   router.get('/wechat', controller.wechat.wechat.index);
+  router.post('/getCityWeather', controller.weather.getCityWeather.index);
+  router.post('/getCitiesList', controller.weather.getCityWeather.getCityList);
+  router.post('/editCities', controller.weather.getCityWeather.editCity);
+  router.post('/getCityByLocationName', controller.weather.getCityWeather.getCityByLocationName);
 };
  

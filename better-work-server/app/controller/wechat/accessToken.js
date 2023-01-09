@@ -32,7 +32,7 @@ class AccessToken extends Controller {
         // 将更新后的config写入文件
         fs.writeFileSync;
         fs.writeFile('./config.json', JSON.stringify(config), (error) => {
-
+          
         })
       });
     } else {
