@@ -1,0 +1,23 @@
+CREATE TABLE `china_cities` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT "序号",
+  `location_id` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市ID",
+  `location_name_en` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市ID英文名称",
+  `location_name_zh` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市ID中文名称",
+  `country_code` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市所属国家code",
+  `country_name_en` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市所属国家英文名称",
+  `country_name_zh` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市所属国家中文名称",
+  `adm1_name_en` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市所属一级行政区域英文名称",
+  `adm1_name_zh` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市所属一级行政区域中文名称",
+  `adm2_name_en` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市的上级行政区划英文名称",
+  `adm2_name_zh` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市的上级行政区划中文名称",
+  `timezone` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市所在时区",
+  `latitude` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市纬度",
+  `longitude` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市经度",
+  `adcode` VARCHAR(36) DEFAULT NULL COMMENT "地区/城市Adcode",
+  `location_introduction` TEXT DEFAULT NULL COMMENT "地区/城市介绍",
+  `location_palatable_dishes` TEXT DEFAULT NULL COMMENT "地区/城市美食",
+  `location_sight` TEXT DEFAULT NULL COMMENT "地区/城市景点",
+  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
+  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
