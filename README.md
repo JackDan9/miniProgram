@@ -1,3 +1,6 @@
+![咨询大白小程序码 (1)](https://user-images.githubusercontent.com/12805846/211237534-507cbb39-5fe4-4da5-aab0-3e159940a119.jpg)
+
+
 # miniProgram
 
 - 关于经济新闻和招聘的微信小程序`better-work`。
